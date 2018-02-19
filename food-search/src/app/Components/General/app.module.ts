@@ -4,25 +4,15 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
+import { AppRoutingModule } from './app-routing.module';
+
 // Components
 import { AppComponent } from './app.component';
-import { PostsComponent } from './posts/posts.component';
+import { PostsComponent } from '../PostsComponent/posts.component';
 
 // Services
-import { DataService } from './dataService.service';
+import { DataService } from '../../Services/data.service';
 
-// Define the routes
-const ROUTES = [
-  {
-    path: '',
-    redirectTo: 'posts',
-    pathMatch: 'full'
-  },
-  {
-    path: 'posts',
-    component: PostsComponent
-  }
-];
 
 
 @NgModule({
@@ -34,7 +24,7 @@ const ROUTES = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    AppRoutingModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

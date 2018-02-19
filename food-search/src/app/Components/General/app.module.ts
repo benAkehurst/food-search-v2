@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 // Components
 import { AppComponent } from './app.component';
 import { PostsComponent } from '../PostsComponent/posts.component';
+import { HomeComponent } from '../HomeComponent/home.component';
 
 // Services
 import { DataService } from '../../Services/data.service';
@@ -18,6 +19,7 @@ import { DataService } from '../../Services/data.service';
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     PostsComponent
   ],
   imports: [

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // App Components
 import { PostsComponent } from '../PostsComponent/posts.component';
+import { HomeComponent } from '../HomeComponent/home.component';
 
 
 // App Common
@@ -10,7 +11,8 @@ import { PostsComponent } from '../PostsComponent/posts.component';
 
 const routes: Routes = [
     { path: 'posts', component: PostsComponent },
-    { path: '', redirectTo: 'signup', pathMatch: 'full' }
+    { path: 'home', component: HomeComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({

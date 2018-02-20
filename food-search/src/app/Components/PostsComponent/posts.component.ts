@@ -14,9 +14,9 @@ export class PostsComponent implements OnInit {
   posts: any = [];
 
   ngOnInit() {
-    this.dataService.getAllPosts().subscribe(posts => {
-      this.posts = posts;
-    });
+    // this.dataService.getAllPosts().subscribe(posts => {
+    //   this.posts = posts;
+    // });
   }
 
 }

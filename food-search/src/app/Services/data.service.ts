@@ -9,14 +9,14 @@ import { Observable } from 'rxjs/Observable';
 export class DataService {
 
     private headers = new Headers({ 'Content-Type': 'application/json' });
-    private localUrl = 'http://localhost:3000/api/';
+    private localUrl = 'http://localhost:3000/';
 
     constructor(private http: Http) { }
 
     // Get all posts from the API
-    getAllPosts() {
+    getAllPlaces() {
         return this.http
-            .get(this.localUrl + 'posts', { headers: this.headers })
+            .post(this.localUrl + 'routeOptions', { headers: this.headers })
             .map(res => res.json());
     }
 }

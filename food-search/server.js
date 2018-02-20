@@ -1,4 +1,8 @@
-// Get dependencies
+//
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────
+//   :::::: S E R V E R   D E P E N D E N C I E S : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+//
 const express = require('express');
 const path = require('path');
 const http = require('http');
@@ -9,32 +13,31 @@ const rp = require('request-promise');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const mongooseUniqueValidator = require('mongoose-unique-validator');
-
+//
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────
+//   :::::: S E R V E R   C O N F I G U R A T I O N : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+//
+// Makes Express avaliable
+const app = express();
 // Get our API routes
 const api = require('./server/serverRoutes/api');
 // Schemas
 const User = require('./server/serverModels/userModel');
 const Route = require('./server/serverModels/routeModel');
-
-const app = express();
-
 // Requirements
 require('dotenv').config()
-
-// Parsers for POST data
+// Setting default server settings
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Default Headers to prevent CORS issues
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
     next();
 });
-
-// Point static path to dist
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist'))); // Point static path to dist
+// app.use('/api', api); // Set our api routes - if i want to use an api for a bigger project
 
 // Connect to DB with mongoose
 mongoose.Promise = global.Promise;
@@ -46,15 +49,22 @@ mongoose.connect("mongodb://localhost:27017/MunchDB", function (err) {
     }
 });
 
-// Set our api routes
-// app.use('/api', api);
-
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-// register user method
+//
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────
+//   :::::: S E R V E R   R O U T E S : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+//
+/**
+ * Registers a user in the database
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 app.post('/registerUser', function (req, res, next) {
     var data = req.body;
     var user = new User({
@@ -75,7 +85,13 @@ app.post('/registerUser', function (req, res, next) {
         });
     });
 });
-// Login user method
+
+/**
+ * Logs in a user
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 app.post('/login', function (req, res, next) {
     var data = req.body;
     User.findOne({ email: data.email }, function (err, user) {
@@ -106,7 +122,9 @@ app.post('/login', function (req, res, next) {
     });
 });
 
-// Get the users location via IP address
+/**
+ * Gets the users location from thier current ip address to use in the call to google places api
+ */
 var userLocaionViaIP = '';
 var options = { uri: 'http://ipinfo.io', headers: { 'User-Agent': 'Request-Promise' }, json: true };
 rp(options)
@@ -119,7 +137,13 @@ rp(options)
         }
     });
 
-// API call to google places to get locations list
+
+/**
+ * Calls Google Places API to get 20 loactions around the user
+ * This is a call with default Params
+ * @param {*} req
+ * @param {*} res
+ */
 app.post('/routeOptions', function (req, res) {
     var data = req.body;
     console.log('Requesting Places from Goolge API');
@@ -142,7 +166,14 @@ app.post('/routeOptions', function (req, res) {
         }
     })
 });
-// builds string for image for loaction info
+
+// TODO: Make a call to Facebook API to get places...
+
+/**
+ * Builds a string to get an image of a location from Google Places API
+ * @param {*} req
+ * @param {*} res
+ */
 app.post('/getPlaceImage', function (req, res) {
     console.log("Requesting Image url");
     var base = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
@@ -154,7 +185,28 @@ app.post('/getPlaceImage', function (req, res) {
     console.log("Photo Url sent to FE");
 });
 
-// Save a route to DB
+/**
+ * Gets the whole user object from the database for the user profile
+ * @param {*} req
+ * @param {*} res
+ */
+app.get("/userInfo/:userId", function (req, res) {
+    User.findById({ _id: req.params.userId }).exec(function (err, user) {
+        if (err) {
+            console.log("Error: " + " " + err);
+        } else {
+            // console.log(user);
+            res.send(user);
+            console.log("Returned user to login");
+        }
+    })
+});
+
+/**
+ * Saves a new route to the user model in the database
+ * @param {*} req
+ * @param {*} res
+ */
 app.post("/saveRoute", function (req, res) {
     var data = req.body.routes;
     var newRoute = {
@@ -169,34 +221,12 @@ app.post("/saveRoute", function (req, res) {
         res.send({ success: true });
     })
 });
-//Gets user details in profile
-app.get("/userInfo/:userId", function (req, res) {
-    User.findById({ _id: req.params.userId }).exec(function (err, user) {
-        if (err) {
-            console.log("Error: " + " " + err);
-        } else {
-            // console.log(user);
-            res.send(user);
-            console.log("Returned user to login");
-        }
-    })
-});
-// Get all saved routes from DB for profile
-app.get("/getallRoutes/:id", function (request, response) {
-    // console.log(request.params.id);
-    User.findOne({
-        uid: request.params.id,
-    }).exec(function (err, user) {
-        if (err) {
-            console.log("Error: " + err);
-        } else {
-            // console.log(user);
-            response.send(user);
-        }
-    })
-});
 
-// DELETE - delete specific candy from the DB
+/**
+ * Removes a route from the user model in the database
+ * @param {*} req
+ * @param {*} res
+ */
 app.delete("/deleteRoute/:uid/:_id", function (request, response) {
     // console.log("ID" + request.params.id);
     User.findOne({ id: request.body.id })
@@ -218,41 +248,15 @@ app.delete("/deleteRoute/:uid/:_id", function (request, response) {
         })
 });
 
-
-// UPDATE - PUT (update) a candy in the DB by the id
-app.put("/editRoute/:_id", function (request, response) {
-
-    var editRoute = request.body;
-
-    Route.findOne({ _id: request.params._id }).exec(function (err, singleRoute) {
-        if (err) {
-            console.log("Error" + " " + err);
-        } else {
-            if (singleRoute) {
-                singleRoute.locationOne = request.body.newLocationOne;
-                singleRoute.locationTwo = request.body.newLocationTwo;
-                singleRoute.locationThree = request.body.newLocationThree;
-                singleRoute.save();
-                response.send(singleRoute);
-            } else {
-                console.log("There was an issue editing the route. The error was: " + " " + err.status);
-            }
-        }
-    })
-});
-
-/**
- * Get port from environment and store in Express.
- */
+//
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────
+//   :::::: S E R V E R   R U N   C O M M A N D S   A N D   P O R T   A C C E S S : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+//
+// Get port from environment and store in Express.
 const port = process.env.PORT || '3000';
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
+// Creates an HTTP server
 const server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
+// Listen on provided port, on all network interfaces.
 server.listen(port, () => console.log(`API running on localhost:${port}`));

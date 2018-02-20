@@ -18,6 +18,9 @@ const Route = require('./server/serverModels/routeModel');
 
 const app = express();
 
+// Requirements
+require('dotenv').config()
+
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -126,9 +129,10 @@ app.post('/routeOptions', function (req, res) {
     var radius = data.radius;
     var type = data.type;
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
+    console.log(key);
     var searchTerm = base + longLat + radius + type + key;
-    // console.log(searchTerm);
-    request(url, function (error, response, body) {
+    console.log(searchTerm);
+    request(searchTerm, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var options = JSON.parse(body)
             // do more stuff

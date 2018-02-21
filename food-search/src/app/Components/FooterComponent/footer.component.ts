@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-footer',
@@ -14,11 +15,16 @@ import { NgModel } from '@angular/forms';
 export class FooterComponent implements OnInit {
 
     constructor(private dataService: DataService, private router: Router) { }
-    places: any;
+    currentYear: Date;
 
     ngOnInit() {
 
+        this.getYear();
+    }
 
+    public getYear() {
+        const date = new Date();
+        this.currentYear = date;
     }
 
 }

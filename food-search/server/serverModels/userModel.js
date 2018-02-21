@@ -7,7 +7,8 @@ var log = debug('reportModel:log');
 var mongoose = require('mongoose');
 var mongooseUniqueValidator = require('mongoose-unique-validator');
 
-
+var RouteModel = require('./routeModel');
+var PlaceModel = require('./placeModel');
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
@@ -18,7 +19,8 @@ var User = new Schema({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        unique: true
     },
     name: {
         type: String
@@ -26,7 +28,14 @@ var User = new Schema({
     image: {
         type: String
     },
-    savedRoutes: []
+    savedRoutes: [{
+        type: Schema.Types.ObjectId,
+        ref: "RouteModel"
+    }],
+    savedPlaces: [{
+        type: Schema.Types.ObjectId,
+        ref: "PlaceModel"
+    }]
 }, {
         timestamps: true
     });

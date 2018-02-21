@@ -27,10 +27,19 @@ export class DataService {
 
   /**
    * HANDLES REGISTERING A NEW USER
-   * @param user
+   * @param this.User
    */
   registerUser() { return this.http.post(this.localUrl + 'registerUser', {data: this.User}, {headers: this.headers})
     .map(res => res.json());
+  }
+
+  /**
+   * HANDLES LOGIN FOR A USER
+   * @param this.User
+   */
+  loginUser() {
+    return this.http.post(this.localUrl + 'login', { data: this.User }, { headers: this.headers })
+      .map(res => res.json());
   }
 
   // Get all posts from the API

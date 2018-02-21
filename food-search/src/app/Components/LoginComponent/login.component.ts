@@ -13,15 +13,32 @@ import { NgModel } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private dataService: DataService, private router: Router) { }
-    places: any;
+    constructor(public dataService: DataService, private router: Router) { }
+
+    jwt: string;
+    id: string;
 
     ngOnInit() {
 
     }
 
+    public loginUser() {
+        this.dataService.loginUser().subscribe(response => {
+            this.dataService.User = response;
+            this.jwt = response.token;
+            this.id = response.obj._id;
+            this.remeberUser();
+            this.router.navigate(['/home']);
+        });
+    }
+
     public goToRegister() {
         this.router.navigate(['/register']);
+    }
+
+    public remeberUser() {
+        localStorage.setItem('token', this.jwt);
+        localStorage.setItem('id', this.id);
     }
 
 }

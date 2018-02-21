@@ -96,7 +96,7 @@ app.post('/registerUser', function (req, res, next) {
  * @param {*} next
  */
 app.post('/login', function (req, res, next) {
-    var data = req.body;
+    var data = req.body.data;
     User.findOne({ email: data.email }, function (err, user) {
         if (err) {
             return res.status(500).json({
@@ -119,8 +119,9 @@ app.post('/login', function (req, res, next) {
         var token = jwt.sign({ user: user }, 'secret', { expiresIn: 7200 });
         res.status(200).json({
             message: 'Successfully logged in',
+            success: true,
             token: token,
-            userId: user._id
+            obj: user
         });
     });
 });

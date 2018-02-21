@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from '../HeaderComponent/header.component';
 import { FooterComponent } from '../FooterComponent/footer.component';
+import { RegisterComponent } from '../RegisterComponent/register.component';
+import { LoginComponent } from '../LoginComponent/login.component';
 import { HomeComponent } from '../HomeComponent/home.component';
 import { PostsComponent } from '../PostsComponent/posts.component';
 
@@ -23,6 +25,8 @@ import { DataService } from '../../Services/data.service';
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    LoginComponent,
+    RegisterComponent,
     HomeComponent,
     PostsComponent
   ],

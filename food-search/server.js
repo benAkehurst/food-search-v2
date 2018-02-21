@@ -66,7 +66,7 @@ app.get('*', (req, res) => {
  * @param {*} next
  */
 app.post('/registerUser', function (req, res, next) {
-    var data = req.body;
+    var data = req.body.data;
     var user = new User({
         name: data.name,
         email: data.email,
@@ -79,8 +79,11 @@ app.post('/registerUser', function (req, res, next) {
                 error: err
             });
         }
+        var token = jwt.sign({ user: user }, 'secret', { expiresIn: 7200 });
         res.status(201).json({
             message: 'User created',
+            success: true,
+            token: token,
             obj: result
         });
     });

@@ -6,6 +6,7 @@ import { PostsComponent } from '../PostsComponent/posts.component';
 import { HomeComponent } from '../HomeComponent/home.component';
 import { LoginComponent } from '../LoginComponent/login.component';
 import { RegisterComponent } from '../RegisterComponent/register.component';
+import { PrivacyComponent } from '../Common/PrivacyComponent/privacy.component';
 
 
 // App Common
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'privacy', component: PrivacyComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -6,6 +6,7 @@ import { PostsComponent } from '../PostsComponent/posts.component';
 import { HomeComponent } from '../HomeComponent/home.component';
 import { LoginComponent } from '../LoginComponent/login.component';
 import { RegisterComponent } from '../RegisterComponent/register.component';
+import { ProfileComponent } from '../ProfileComponent/profile.component';
 import { PrivacyComponent } from '../Common/PrivacyComponent/privacy.component';
 import { AboutComponent } from '../Common/AboutComponent/about.component';
 import { ContactComponent } from '../Common/ContactComponent/contact.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
     { path: 'privacy', component: PrivacyComponent },
     { path: 'about', component: AboutComponent },
     { path: 'contact', component: ContactComponent },
+    { path: 'profile', component: ProfileComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

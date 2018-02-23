@@ -27,4 +27,12 @@ export class FooterComponent implements OnInit {
         this.currentYear = date;
     }
 
+    goToAboutPage() {
+        this.router.navigate(['/about']);
+    }
+
+    goToContactPage() {
+        this.router.navigate(['/contact']);
+    }
+
 }

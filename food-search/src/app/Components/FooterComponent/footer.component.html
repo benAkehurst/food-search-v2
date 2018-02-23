@@ -1,5 +1,8 @@
 <footer class="footer">
-    <div class="container">
-        <span>&#169; {{ this.currentYear | date:'y' }}</span>
+    <div class="container-fluid footer-container">
+        <span class="copyright"><p>&#169; Munch {{ this.currentYear | date:'y' }}</p></span>
+        <span class="about-link" (click)="goToAboutPage()"><p>About Us</p></span>
+        <span class="contact-link" (click)="goToContactPage()"><p>Contact Us</p></span>
+        <span class="built-with-container"><p>Built With:</p></span>
     </div>
 </footer>

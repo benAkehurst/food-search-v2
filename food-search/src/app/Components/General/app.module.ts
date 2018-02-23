@@ -14,6 +14,9 @@ import { RegisterComponent } from '../RegisterComponent/register.component';
 import { LoginComponent } from '../LoginComponent/login.component';
 import { HomeComponent } from '../HomeComponent/home.component';
 import { PostsComponent } from '../PostsComponent/posts.component';
+import { PrivacyComponent } from '../Common/PrivacyComponent/privacy.component';
+import { ContactComponent } from '../Common/ContactComponent/contact.component';
+import { AboutComponent } from '../Common/AboutComponent/about.component';
 
 // Services
 import { DataService } from '../../Services/data.service';
@@ -28,7 +31,10 @@ import { DataService } from '../../Services/data.service';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    PostsComponent
+    PostsComponent,
+    PrivacyComponent,
+    ContactComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

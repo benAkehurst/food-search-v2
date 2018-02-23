@@ -20,4 +20,8 @@ export class ContactComponent implements OnInit {
 
     }
 
+    public goToPrivacyPolicy() {
+        this.router.navigate(['/privacy']);
+    }
+
 }

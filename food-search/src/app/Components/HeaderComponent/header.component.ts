@@ -22,5 +22,17 @@ export class HeaderComponent implements OnInit {
 
     }
 
+    public goToHomeLink() {
+        this.router.navigate(['/home']);
+    }
+
+    public goToMapLink() {
+        this.router.navigate(['/home']);
+    }
+
+    public goToProfileLink() {
+        this.router.navigate(['/profile']);
+    }
+
 
 }

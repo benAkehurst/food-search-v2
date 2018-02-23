@@ -88,3 +88,15 @@
   border-color: #05a;
 }
 
+.privacy-container {
+  padding: 12px;
+  font-size: 10px;
+}
+
+.privacy-link:hover {
+  cursor: pointer;
+}
+
+.privacy-text {
+  font-style: italic;
+}

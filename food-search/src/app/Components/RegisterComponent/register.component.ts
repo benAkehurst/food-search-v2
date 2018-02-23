@@ -35,6 +35,10 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
     }
 
+    public goToPrivacyLink() {
+        this.router.navigate(['/privacy']);
+    }
+
     public remeberUser() {
         localStorage.setItem('token', this.jwt);
         localStorage.setItem('id', this.id);

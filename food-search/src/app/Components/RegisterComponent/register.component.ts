@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+import swal from 'sweetalert';
 
 @Component({
     selector: 'app-register',
@@ -14,7 +15,7 @@ import { NgModel } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
     constructor(public dataService: DataService, private router: Router) { }
-
+    errors: any;
     jwt: string;
     id: string;
 
@@ -27,8 +28,14 @@ export class RegisterComponent implements OnInit {
             this.jwt = response.token;
             this.id = response.obj._id;
             this.remeberUser();
-            this.router.navigate(['/home']);
-        });
+        },
+            error => {
+                this.errors = error;
+                this.openSwal('Error', 'Sorrt about that, please try agian.');
+            },
+            () => {
+                this.router.navigate(['/home']);
+            });
     }
 
     public goToLogin() {
@@ -42,6 +49,13 @@ export class RegisterComponent implements OnInit {
     public remeberUser() {
         localStorage.setItem('token', this.jwt);
         localStorage.setItem('id', this.id);
+    }
+
+    public openSwal(Title, text) {
+        swal({
+            title: Title,
+            text: text,
+        });
     }
 
 }

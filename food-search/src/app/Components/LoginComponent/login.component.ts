@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+import swal from 'sweetalert';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +15,7 @@ import { NgModel } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
     constructor(public dataService: DataService, private router: Router) { }
-
+    errors: any;
     jwt: string;
     id: string;
 
@@ -24,12 +25,18 @@ export class LoginComponent implements OnInit {
 
     public loginUser() {
         this.dataService.loginUser().subscribe(response => {
-            this.dataService.User = response;
-            this.jwt = response.token;
-            this.id = response.obj._id;
-            this.remeberUser();
-            this.router.navigate(['/home']);
-        });
+                this.dataService.User = response;
+                this.jwt = response.token;
+                this.id = response.obj._id;
+                this.remeberUser();
+            },
+            error => {
+                this.errors = error;
+                this.openSwal('Error', 'Please check your email or password');
+            },
+            () => {
+                this.router.navigate(['/home']);
+            });
     }
 
     public goToRegister() {
@@ -39,6 +46,13 @@ export class LoginComponent implements OnInit {
     public remeberUser() {
         localStorage.setItem('token', this.jwt);
         localStorage.setItem('id', this.id);
+    }
+
+    public openSwal(Title, text) {
+        swal({
+            title: Title,
+            text: text,
+        });
     }
 
 }

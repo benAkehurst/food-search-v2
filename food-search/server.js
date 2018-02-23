@@ -100,18 +100,21 @@ app.post('/login', function (req, res, next) {
     User.findOne({ email: data.email }, function (err, user) {
         if (err) {
             return res.status(500).json({
+                success: false,
                 title: 'An error occurred',
                 error: err
             });
         }
         if (!user) {
             return res.status(401).json({
+                success: false,
                 title: 'Login failed',
                 error: { message: 'Invalid login credentials' }
             });
         }
         if (!bcrypt.compareSync(data.password, user.password)) {
             return res.status(401).json({
+                success: false,
                 title: 'Login failed',
                 error: { message: 'Invalid login credentials' }
             });

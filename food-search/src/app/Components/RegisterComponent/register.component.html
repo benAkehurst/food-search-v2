@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-3"></div>
@@ -68,5 +68,29 @@
     </div>
   </div>
 
+</div>
+<app-footer></app-footer> -->
+
+<app-header></app-header>
+<div class="login">
+  <h2 class="login-header">Register</h2>
+  <form class="login-container">
+    <p>
+      <input type="text" placeholder="Name" required [(ngModel)]="dataService.User.name" [ngModelOptions]="{standalone: true}">
+    </p>
+    <p>
+      <input type="email" placeholder="Email" required [(ngModel)]="dataService.User.email" [ngModelOptions]="{standalone: true}">
+    </p>
+    <p>
+      <input type="password" placeholder="Password" required [(ngModel)]="dataService.User.password" [ngModelOptions]="{standalone: true}">
+    </p>
+    <span>By registering, you conform to our privicy policy</span>
+    <p>
+      <input type="submit" value="Register" (click)="registerUser()">
+    </p>
+  </form>
+  <p class="link-to-register">Have an account?
+    <span (click)="goToLogin()"> Login Here.</span>
+  </p>
 </div>
 <app-footer></app-footer>

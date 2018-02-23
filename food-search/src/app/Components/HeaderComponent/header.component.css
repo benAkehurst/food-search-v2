@@ -1,6 +1,9 @@
 .header-link {
     color: #fff;
+    user-select: none;
 }
 .header-link:hover{
     color: lightgray;
+    cursor: pointer;
 }
+

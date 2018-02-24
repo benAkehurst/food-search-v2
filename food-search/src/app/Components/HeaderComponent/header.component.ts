@@ -15,11 +15,25 @@ import { NgModel } from '@angular/forms';
 export class HeaderComponent implements OnInit {
 
     constructor(private dataService: DataService, private router: Router) { }
-
+    loggedIn: Boolean = false;
 
     ngOnInit() {
 
+        this.checkLoggedInStaus();
 
+        setInterval(() => {
+            this.checkLoggedInStaus();
+        }, 10000);
+    }
+
+    public checkLoggedInStaus() {
+        const userObj = this.getStorageItems();
+        if (userObj.status === false ) {
+            this.loggedIn = false;
+        }
+        if (userObj.status === true ) {
+            this.loggedIn = true;
+        }
     }
 
     public goToHomeLink() {
@@ -32,6 +46,26 @@ export class HeaderComponent implements OnInit {
 
     public goToProfileLink() {
         this.router.navigate(['/profile']);
+    }
+
+    public goToLoginLink() {
+        this.router.navigate(['/login']);
+    }
+
+    public goToRegisterLink() {
+        this.router.navigate(['/register']);
+    }
+
+    public getStorageItems() {
+        const token = localStorage.getItem('token');
+        const id = localStorage.getItem('id');
+        let userObj = { status: false };
+        if (token == null && id == null ) {
+            return userObj = { status: false };
+        }
+        if (token && id ) {
+            return userObj = {status: true};
+        }
     }
 
 

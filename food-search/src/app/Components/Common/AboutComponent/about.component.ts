@@ -14,8 +14,10 @@ import { DatePipe } from '@angular/common';
 })
 export class AboutComponent implements OnInit {
 
-    constructor(private dataService: DataService, private router: Router) { }
-
+    constructor(private dataService: DataService, private router: Router) {
+        this.googleApiImage = '/assets/images/google-api.png';
+    }
+    googleApiImage: String;
     ngOnInit() {
 
     }

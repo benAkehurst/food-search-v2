@@ -14,7 +14,8 @@ import { DatePipe } from '@angular/common';
 })
 export class FooterComponent implements OnInit {
 
-    constructor(private dataService: DataService, private router: Router) { }
+    constructor(private dataService: DataService, private router: Router) {
+    }
     currentYear: Date;
 
     ngOnInit() {

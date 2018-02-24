@@ -151,16 +151,18 @@ rp(options)
  * @param {*} req
  * @param {*} res
  */
+/*
 app.post('/routeOptions', function (req, res) {
-    var data = req.body;
+    var data = req.body.data;
+    console.log(data);
     console.log('Requesting Places from Goolge API');
     var base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
-    // var longLat = data.location;
+    var lat = data.lat;
+    var lng = data.lng;
     var longLat = userLocaionViaIP.loc;
-    var radius = data.radius;
-    var type = data.type;
+    var radius = "&radius=1500";
+    var type = "&type=cafe&type=bar"
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
-    console.log(key);
     var searchTerm = base + longLat + radius + type + key;
     console.log(searchTerm);
     request(searchTerm, function (error, response, body) {
@@ -173,6 +175,33 @@ app.post('/routeOptions', function (req, res) {
         }
     })
 });
+*/
+
+/**
+ * This call will be used once the location ip has been checked and confirmed on the front end
+ */
+app.post('/routeOptions', function (req, res) {
+    var data = req.body.data;
+    console.log(data);
+    console.log('Requesting Places from Goolge API');
+    var base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
+    var lat = data.lat;
+    var lng = data.lng;
+    var radius = "&radius=" + data.radius;
+    var typeCafe = "&type=" + data.typeCafe
+    var typeBar = "&type=" + data.typeBar
+    var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
+    var searchTerm = base + lng +','+ lat + radius + typeBar + key;
+    console.log(searchTerm);
+    request(searchTerm, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var options = JSON.parse(body)
+            res.send(options);
+            console.log('Places sent to FE');
+        }
+    })
+});
+
 
 // TODO: Make a call to Facebook API to get places...
 

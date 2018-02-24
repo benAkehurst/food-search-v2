@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import UserDataModel from '../DataModels/UserDataModel';
 import RouteDataModel from '../DataModels/RouteDataModel';
 import PlaceDataModel from '../DataModels/PlaceDataModel';
+import RouteOptionsDataModel from '../DataModels/RouteOptionsDataModel';
 
 @Injectable()
 export class DataService {
@@ -18,11 +19,13 @@ export class DataService {
   User: UserDataModel;
   Route: RouteDataModel;
   Place: PlaceDataModel;
+  RouteOptions: RouteOptionsDataModel;
 
   constructor(private http: Http) {
     this.User = new UserDataModel();
     this.Route = new RouteDataModel();
     this.Place = new PlaceDataModel();
+    this.RouteOptions = new RouteOptionsDataModel();
   }
 
   /**
@@ -43,7 +46,8 @@ export class DataService {
   }
 
   // Get all posts from the API
-  getAllPlaces() {return this.http.post(this.localUrl + 'routeOptions', { headers: this.headers})
+  getAllPlaces() {
+    return this.http.post(this.localUrl + 'routeOptions', { data: this.RouteOptions}, { headers: this.headers})
     .map(res => res.json());
   }
 

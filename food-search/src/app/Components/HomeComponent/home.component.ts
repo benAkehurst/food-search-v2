@@ -19,14 +19,29 @@ export class HomeComponent implements OnInit {
     places: any;
     geolocationPosition: Object = {};
     title: String = 'Your Location';
-    lat: Number = 0;
-    lng: Number = 0;
+    lat: Number;
+    lng: Number;
     zoom: Number = 16;
 
     ngOnInit() {
 
-        // this.getAllPlaces();
         this.getUserLocation();
+    }
+
+    public getUserLocation() {
+        if (window.navigator && window.navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(
+                position => {
+                    this.dataService.RouteOptions.lat = position.coords.latitude;
+                    this.dataService.RouteOptions.lng = position.coords.longitude;
+                    this.geolocationPosition = position;
+                    this.lat = position.coords.latitude;
+                    this.lng = position.coords.longitude;
+                }
+            );
+        } else {
+            this.openSwal('Error', 'Sorry, we couldn\'t find where you are right now');
+        }
     }
 
     public getAllPlaces() {
@@ -38,20 +53,6 @@ export class HomeComponent implements OnInit {
             this.errors = error;
             this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
         });
-    }
-
-    public getUserLocation() {
-        if (window.navigator && window.navigator.geolocation) {
-            window.navigator.geolocation.getCurrentPosition(
-                position => {
-                    this.geolocationPosition = position,
-                    this.lat = position.coords.latitude;
-                    this.lng = position.coords.longitude;
-                }
-            );
-        } else {
-            this.openSwal('Error', 'Sorry, we couldn\'t find where you are right now');
-        }
     }
 
     public goToPosts() {

@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import keys from '../../DataModels/FrontEndKeys';
+
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from '../HeaderComponent/header.component';
@@ -21,6 +23,9 @@ import { AboutComponent } from '../Common/AboutComponent/about.component';
 
 // Services
 import { DataService } from '../../Services/data.service';
+
+// Extras
+import { AgmCoreModule } from '@agm/core';
 
 
 
@@ -42,7 +47,10 @@ import { DataService } from '../../Services/data.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: keys.GOOGLE_MAPS_API_KEY
+    })
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

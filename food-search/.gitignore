@@ -39,6 +39,7 @@ testem.log
 .env.test.local
 .env.production.local
 .env
+FrontEndKeys.ts
 
 # e2e
 /e2e/*.js

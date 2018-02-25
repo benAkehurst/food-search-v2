@@ -26,6 +26,7 @@ import { DataService } from '../../Services/data.service';
 
 // Extras
 import { AgmCoreModule } from '@agm/core';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
 
@@ -48,6 +49,7 @@ import { AgmCoreModule } from '@agm/core';
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    Ng4LoadingSpinnerModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: keys.GOOGLE_MAPS_API_KEY
     })

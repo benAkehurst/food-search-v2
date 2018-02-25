@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import swal from 'sweetalert';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 
 @Component({
     selector: 'app-home',
@@ -14,7 +16,7 @@ import swal from 'sweetalert';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private dataService: DataService, private router: Router) { }
+    constructor(private dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
     errors: any;
     places: any;
     geolocationPosition: Object = {};
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
 
         this.getUserLocation();
+        this.spinnerService.show();
     }
 
     public getUserLocation() {
@@ -37,6 +40,7 @@ export class HomeComponent implements OnInit {
                     this.geolocationPosition = position;
                     this.lat = position.coords.latitude;
                     this.lng = position.coords.longitude;
+                    this.spinnerService.hide();
                 }
             );
         } else {

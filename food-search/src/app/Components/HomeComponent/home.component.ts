@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
 
     constructor(private dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
     errors: any;
-    places: any;
+    places: any = [];
+    placesInformation: any = [];
     geolocationPosition: Object = {};
     title: String = 'Your Location';
     lat: Number;
@@ -50,8 +51,9 @@ export class HomeComponent implements OnInit {
 
     public getAllPlaces() {
         this.dataService.getAllPlaces().subscribe(places => {
-            this.places = places;
-            console.log(this.places.results);
+            this.places = places.results;
+            console.log(this.places);
+            this.stripInformationAboutPlace();
         },
         error => {
             this.errors = error;
@@ -59,15 +61,57 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    public goToPosts() {
-        this.router.navigate(['/posts']);
+    public stripInformationAboutPlace() {
+        for (let i = 0; i < this.places.length; i++) {
+            const placeObject = {
+                geometry: this.places[i].geometry,
+                openNow: this.places[i].opening_hours,
+                name: this.places[i].name,
+                photos: this.places[i].photos,
+                rating: this.places[i].rating,
+                reference: this.places[i].reference
+            };
+            this.placesInformation.push(placeObject);
+        }
     }
+
+    public sortPlaceOpenNow() {
+
+    }
+
+    public sortPlaceDistanceFromMe() {
+
+    }
+
+    public sortThreeOptions() {
+
+    }
+
+    public makeRoute() {
+
+    }
+
+    public saveRoute() {
+
+    }
+
+    public viewPlace() {
+
+    }
+
+    public savePlace() {
+
+    }
+
+    public goToPosts() {
+            this.router.navigate(['/posts']);
+        }
 
     public openSwal(Title, text) {
-        swal({
-            title: Title,
-            text: text,
-        });
-    }
-
+            swal({
+                title: Title,
+                text: text,
+            });
+        }
 }
+

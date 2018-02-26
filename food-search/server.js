@@ -187,11 +187,12 @@ app.post('/routeOptions', function (req, res) {
     var base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
     var lat = data.lat;
     var lng = data.lng;
-    var radius = "&radius=" + data.radius;
-    var typeCafe = "&type=" + data.typeCafe
-    var typeBar = "&type=" + data.typeBar
+    var longLat = userLocaionViaIP.loc;
+    var radius = "&radius=1500";
+    var type = "&type=cafe&type=bar"
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
-    var searchTerm = base + lng +','+ lat + radius + typeBar + key;
+    // var searchTerm = base + lng + ',' + lat + radius + type + key;
+    var searchTerm = base + longLat + radius + type + key;
     console.log(searchTerm);
     request(searchTerm, function (error, response, body) {
         if (!error && response.statusCode == 200) {

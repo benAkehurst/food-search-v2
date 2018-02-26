@@ -1,15 +1,14 @@
 <app-header></app-header>
-
-<h1>This is the home component</h1>
-
+<ng4-loading-spinner> </ng4-loading-spinner>
+<br>
+<br>
 <button type="button" class="btn btn-primary" (click)="goToPosts()">Go to Posts</button>
 
 <button type="button" class="btn btn-info" (click)="getAllPlaces()">Get a route</button>
-
+<br>
+<br>
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
 </agm-map>
-
-<ng4-loading-spinner> </ng4-loading-spinner>
 
 <app-footer></app-footer>

@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     errors: any;
     places: any = [];
     placesInformation: any = [];
+    placesOpenNow: any = [];
     geolocationPosition: Object = {};
     title: String = 'Your Location';
     lat: Number;
@@ -72,11 +73,17 @@ export class HomeComponent implements OnInit {
                 reference: this.places[i].reference
             };
             this.placesInformation.push(placeObject);
+            this.sortPlaceOpenNow();
         }
     }
 
     public sortPlaceOpenNow() {
-
+        for (let i = 0; i < this.placesInformation.length; i++) {
+            if (this.placesInformation[i].openNow.open_now === true) {
+                this.placesOpenNow.push(this.placesInformation[i]);
+            }
+        }
+        console.log(this.placesOpenNow);
     }
 
     public sortPlaceDistanceFromMe() {

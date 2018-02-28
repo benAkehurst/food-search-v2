@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
                 reference: this.places[i].reference
             };
             this.placesInformation.push(placeObject);
-            console.log(this.placesInformation);
+            // console.log(this.placesInformation);
             if (this.placesInformation) {
                 this.sortPlaceDistanceFromMe();
             } else {
@@ -86,17 +86,29 @@ export class HomeComponent implements OnInit {
     }
 
     public sortPlaceDistanceFromMe() {
-        for (let i = 0; i < this.placesInformation.length; i++) {
+        console.log(this.placesInformation);
+
+        this.placesInformation.forEach(element => {
             const locationsObj = {
+                place: this.placesInformation,
                 userLong: this.lng,
                 userLat: this.lat,
-                placeLong: this.placesInformation[i].geometry.location.lng,
-                placeLat: this.placesInformation[i].geometry.location.lat,
+                placeLong: this.placesInformation.geometry.location.lng,
+                placeLat: this.placesInformation.geometry.location.lat,
             };
-            const calculatedDistance = this.calculateDistance(locationsObj);
-            console.log(calculatedDistance);
-        }
+            let calculatedDistance = this.calculateDistance(locationsObj);
+            if (calculatedDistance = 3) {
+                this.to500Meters.push(locationsObj.place);
+            } else if (calculatedDistance = 4) {
+                this.to1000Meters.push(locationsObj.place);
+            } else if (calculatedDistance = 5) {
+                this.to1500Meters.push(locationsObj.place);
+            }
+        });
 
+        console.log(this.to500Meters);
+        console.log(this.to1000Meters);
+        console.log(this.to1500Meters);
     }
 
     public sortThreeOptions() {

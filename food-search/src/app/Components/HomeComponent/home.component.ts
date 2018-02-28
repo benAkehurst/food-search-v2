@@ -20,8 +20,11 @@ export class HomeComponent implements OnInit {
     errors: any;
     places: any = [];
     placesInformation: any = [];
-    placesOpenNow: any = [];
+    distanceArr: any = [];
     geolocationPosition: Object = {};
+    to500Meters: any = [];
+    to1000Meters: any = [];
+    to1500Meters: any = [];
     title: String = 'Your Location';
     lat: Number;
     lng: Number;
@@ -53,7 +56,7 @@ export class HomeComponent implements OnInit {
     public getAllPlaces() {
         this.dataService.getAllPlaces().subscribe(places => {
             this.places = places.results;
-            console.log(this.places);
+            // console.log(this.places);
             this.stripInformationAboutPlace();
         },
         error => {
@@ -73,20 +76,26 @@ export class HomeComponent implements OnInit {
                 reference: this.places[i].reference
             };
             this.placesInformation.push(placeObject);
-            this.sortPlaceOpenNow();
-        }
-    }
-
-    public sortPlaceOpenNow() {
-        for (let i = 0; i < this.placesInformation.length; i++) {
-            if (this.placesInformation[i].openNow.open_now === true) {
-                this.placesOpenNow.push(this.placesInformation[i]);
+            console.log(this.placesInformation);
+            if (this.placesInformation) {
+                this.sortPlaceDistanceFromMe();
+            } else {
+                this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
             }
         }
-        console.log(this.placesOpenNow);
     }
 
     public sortPlaceDistanceFromMe() {
+        for (let i = 0; i < this.placesInformation.length; i++) {
+            const locationsObj = {
+                userLong: this.lng,
+                userLat: this.lat,
+                placeLong: this.placesInformation[i].geometry.location.lng,
+                placeLat: this.placesInformation[i].geometry.location.lat,
+            };
+            const calculatedDistance = this.calculateDistance(locationsObj);
+            console.log(calculatedDistance);
+        }
 
     }
 
@@ -108,6 +117,30 @@ export class HomeComponent implements OnInit {
 
     public savePlace() {
 
+    }
+
+    public calculateDistance(locationsObj) {
+        const getDistance = this.distance(locationsObj.userLat, locationsObj.userLong, locationsObj.placeLat, locationsObj.placeLong);
+        return getDistance;
+    }
+
+    public distance(lat1, lon1, lat2, lon2) {
+        // console.log('running');
+        // console.log(lat1, lon1, lat2, lon2);
+        const R = 6371; // km (change this constant to get miles)
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c;
+        if (d > 1) {
+            return Math.round(d);
+        } else if (d <= 1) {
+            return Math.round(d * 1000);
+        }
+        return d;
     }
 
     public goToPosts() {

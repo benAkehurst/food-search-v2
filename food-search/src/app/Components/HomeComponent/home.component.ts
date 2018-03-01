@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
     }
 
     public stripInformationAboutPlace() {
-        for (let i = 0; i < this.places.length; i++) {
+        for (let i = 0; i < 20; i++) {
             const placeObject = {
                 geometry: this.places[i].geometry,
                 openNow: this.places[i].opening_hours,
@@ -93,8 +93,8 @@ export class HomeComponent implements OnInit {
                 place: this.placesInformation,
                 userLong: this.lng,
                 userLat: this.lat,
-                placeLong: this.placesInformation.geometry.location.lng,
-                placeLat: this.placesInformation.geometry.location.lat,
+                placeLong: this.dataService.RouteOptions.lng,
+                placeLat: this.dataService.RouteOptions.lat,
             };
             let calculatedDistance = this.calculateDistance(locationsObj);
             if (calculatedDistance = 3) {

@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
     zoom: Number = 16;
 
     ngOnInit() {
-
         this.getUserLocation();
         this.spinnerService.show();
     }
@@ -66,22 +65,22 @@ export class HomeComponent implements OnInit {
     }
 
     public stripInformationAboutPlace() {
-        for (let i = 0; i < 20; i++) {
+        this.places.forEach(place => {
             const placeObject = {
-                geometry: this.places[i].geometry,
-                openNow: this.places[i].opening_hours,
-                name: this.places[i].name,
-                photos: this.places[i].photos,
-                rating: this.places[i].rating,
-                reference: this.places[i].reference
+                geometry: place.geometry,
+                openNow: place.opening_hours,
+                name: place.name,
+                photos: place.photos,
+                rating: place.rating,
+                reference: place.reference
             };
             this.placesInformation.push(placeObject);
-            // console.log(this.placesInformation);
-            if (this.placesInformation) {
-                this.sortPlaceDistanceFromMe();
-            } else {
-                this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
-            }
+        });
+        console.log(this.placesInformation);
+        if (this.placesInformation) {
+            this.sortPlaceDistanceFromMe();
+        } else {
+            this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
         }
     }
 
@@ -90,18 +89,18 @@ export class HomeComponent implements OnInit {
 
         this.placesInformation.forEach(element => {
             const locationsObj = {
-                place: this.placesInformation,
-                userLong: this.lng,
-                userLat: this.lat,
+                place: element.placesInformation,
+                userLong: element.lng,
+                userLat: element.lat,
                 placeLong: this.dataService.RouteOptions.lng,
                 placeLat: this.dataService.RouteOptions.lat,
             };
-            let calculatedDistance = this.calculateDistance(locationsObj);
-            if (calculatedDistance = 3) {
+            const calculatedDistance = this.calculateDistance(locationsObj);
+            if (calculatedDistance > 2 && calculatedDistance < 4) {
                 this.to500Meters.push(locationsObj.place);
-            } else if (calculatedDistance = 4) {
+            } else if (calculatedDistance > 3 && calculatedDistance < 5) {
                 this.to1000Meters.push(locationsObj.place);
-            } else if (calculatedDistance = 5) {
+            } else if (calculatedDistance > 4 && calculatedDistance < 6) {
                 this.to1500Meters.push(locationsObj.place);
             }
         });

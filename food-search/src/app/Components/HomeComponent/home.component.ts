@@ -110,13 +110,25 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    console.log(this.to500Meters);
-    console.log(this.to1000Meters);
-    console.log(this.to1500Meters);
+    // console.log(this.to500Meters);
+    // console.log(this.to1000Meters);
+    // console.log(this.to1500Meters);
+    if (this.to500Meters && this.to1000Meters) {
+        this.sortThreeOptions();
+    } else {
+        this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
+    }
   }
 
   public sortThreeOptions() {
-
+    const randomNumber1 = Math.floor(Math.random() * this.to500Meters.length);
+    const randomNumber2 = Math.floor(Math.random() * this.to1000Meters.length);
+    const routeOption = {
+        locationOne: this.to500Meters[randomNumber1],
+        locationTwo: this.to1000Meters[randomNumber2],
+        locationThree: this.to1500Meters
+    };
+    console.log(routeOption);
   }
 
   public makeRoute() {

@@ -21,12 +21,17 @@ export class HomeComponent implements OnInit {
 
   errors: any;
   places: any = [];
+  weather: any = [];
+  currentWeather: any = {};
   placesInformation: any = [];
+  weatherTime: any = '';
+  celciusTemp: any = '';
   distanceArr: any = [];
   geolocationPosition: Object = {};
   to500Meters: any = [];
   to1000Meters: any = [];
   to1500Meters: any = [];
+  randomRouteOption: any = {};
   title: String = 'Your Location';
   lat: Number;
   lng: Number;
@@ -34,7 +39,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getUserLocation();
+    this.getCurrentWeather();
     this.spinnerService.show();
+  }
+
+  public getCurrentWeather() {
+    this.dataService.getCurrentWeather().subscribe(weather => {
+        this.weather = weather.list;
+        this.trimweather();
+    },
+    error => {
+        this.errors = error;
+        this.openSwal('Error', 'Sorry, we couldn\'t get any weather right now');
+    });
   }
 
   public getUserLocation() {
@@ -68,15 +85,17 @@ export class HomeComponent implements OnInit {
 
   public stripInformationAboutPlace() {
     this.places.forEach(place => {
-      const placeObject = {
-        geometry: place.geometry,
-        openNow: place.opening_hours,
-        name: place.name,
-        photos: place.photos,
-        rating: place.rating,
-        reference: place.reference
-      };
-      this.placesInformation.push(placeObject);
+        if (place.rating > 3.9) {
+            const placeObject = {
+                geometry: place.geometry,
+                openNow: place.opening_hours,
+                name: place.name,
+                photos: place.photos,
+                rating: place.rating,
+                reference: place.reference
+            };
+            this.placesInformation.push(placeObject);
+        }
     });
     console.log(this.placesInformation);
     if (this.placesInformation) {
@@ -124,12 +143,19 @@ export class HomeComponent implements OnInit {
     const randomNumber1 = Math.floor(Math.random() * this.to500Meters.length);
     const randomNumber2 = Math.floor(Math.random() * this.to1000Meters.length);
     const randomNumber3 = Math.floor(Math.random() * this.to1500Meters.length);
+    const locationOne = this.to500Meters[randomNumber1];
+    const locationTwo = this.to1000Meters[randomNumber2];
+    let locationThree = this.to1500Meters[randomNumber3];
+    if (this.to1500Meters.length < 1 ) {
+        locationThree = this.to1000Meters[randomNumber3];
+    }
     const routeOption = {
-        locationOne: this.to500Meters[randomNumber1],
-        locationTwo: this.to1000Meters[randomNumber2],
-        locationThree: this.to1500Meters[randomNumber3]
+        locationOne: locationOne,
+        locationTwo: locationTwo,
+        locationThree: locationThree
     };
     console.log(routeOption);
+    this.randomRouteOption = routeOption;
   }
 
   public makeRoute() {
@@ -165,6 +191,17 @@ export class HomeComponent implements OnInit {
       return Math.round(d * 1000);
     }
     return d;
+  }
+
+  public trimweather() {
+      this.currentWeather = this.weather[0];
+      this.weatherTime = this.currentWeather.dt_txt;
+      this.convertToCelcius();
+  }
+
+  public convertToCelcius() {
+    const kelvinTemp = this.currentWeather.main.temp;
+    this.celciusTemp = kelvinTemp - 273.15;
   }
 
   public goToPosts() {

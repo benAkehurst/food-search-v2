@@ -45,10 +45,20 @@ export class DataService {
       .map(res => res.json());
   }
 
-  // Get all posts from the API
+  /**
+   * GETS 20 PLACES FROM GOOGLE PLACES API TO BUILD ROUTE
+   */
   getAllPlaces() {
     return this.http.post(this.localUrl + 'routeOptions', { data: this.RouteOptions}, { headers: this.headers})
     .map(res => res.json());
+  }
+
+  /**
+   * GETS THE WEATHER FOR THE USERS CITY VIA IP ADDRESS
+   */
+  getCurrentWeather() {
+    return this.http.post(this.localUrl + 'currentWeather', { headers: this.headers })
+      .map(res => res.json());
   }
 
 }

@@ -189,7 +189,7 @@ app.post('/routeOptions', function (req, res) {
     var lng = data.lng;
     var longLat = userLocaionViaIP.loc;
     var radius = "&radius=1500";
-    var type = "&type=cafe&type=bar"
+    var type = "&type=cafe&type=bar&type=resturant"
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
     // var searchTerm = base + lng + ',' + lat + radius + type + key;
     var searchTerm = base + longLat + radius + type + key;
@@ -204,7 +204,26 @@ app.post('/routeOptions', function (req, res) {
 });
 
 
-// TODO: Make a call to Facebook API to get places...
+/**
+ * Gets the current weather
+ */
+app.post('/currentWeather', function (req, res) {
+    var baseUrl = "https://api.openweathermap.org/data/2.5/forecast?q=";
+    var city = userLocaionViaIP.city;
+    var country = userLocaionViaIP.country;
+    var comma = ",";
+    var mode = "&mode=json";
+    var key = "&APPID=" + process.env.OPEN_WEATHER_MAP_API_KEY;
+    var searchUrl = baseUrl + city + comma + country + mode + key;
+    console.log(searchUrl);
+    request(searchUrl, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var weather = JSON.parse(body)
+            res.send(weather);
+            console.log('weather sent to FE');
+        }
+    })
+});
 
 /**
  * Builds a string to get an image of a location from Google Places API

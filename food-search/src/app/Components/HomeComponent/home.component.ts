@@ -86,16 +86,19 @@ export class HomeComponent implements OnInit {
 
     public sortPlaceDistanceFromMe() {
         console.log(this.placesInformation);
-
         this.placesInformation.forEach(element => {
             const locationsObj = {
-                place: element.placesInformation,
-                userLong: element.lng,
-                userLat: element.lat,
-                placeLong: this.dataService.RouteOptions.lng,
-                placeLat: this.dataService.RouteOptions.lat,
+                place: element,
+                userLong: this.dataService.RouteOptions.lng,
+                userLat: this.dataService.RouteOptions.lat,
+                placeLong: element.geometry.location.lng,
+                placeLat: element.geometry.location.lat
             };
-            const calculatedDistance = this.calculateDistance(locationsObj);
+            const calculatedDistance = this.distance(locationsObj.userLat,
+                                                     locationsObj.userLong,
+                                                     locationsObj.placeLat,
+                                                     locationsObj.placeLong);
+            console.log(calculatedDistance);
             if (calculatedDistance > 2 && calculatedDistance < 4) {
                 this.to500Meters.push(locationsObj.place);
             } else if (calculatedDistance > 3 && calculatedDistance < 5) {
@@ -128,11 +131,6 @@ export class HomeComponent implements OnInit {
 
     public savePlace() {
 
-    }
-
-    public calculateDistance(locationsObj) {
-        const getDistance = this.distance(locationsObj.userLat, locationsObj.userLong, locationsObj.placeLat, locationsObj.placeLong);
-        return getDistance;
     }
 
     public distance(lat1, lon1, lat2, lon2) {

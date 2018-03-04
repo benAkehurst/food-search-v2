@@ -123,10 +123,11 @@ export class HomeComponent implements OnInit {
   public sortThreeOptions() {
     const randomNumber1 = Math.floor(Math.random() * this.to500Meters.length);
     const randomNumber2 = Math.floor(Math.random() * this.to1000Meters.length);
+    const randomNumber3 = Math.floor(Math.random() * this.to1500Meters.length);
     const routeOption = {
         locationOne: this.to500Meters[randomNumber1],
         locationTwo: this.to1000Meters[randomNumber2],
-        locationThree: this.to1500Meters
+        locationThree: this.to1500Meters[randomNumber3]
     };
     console.log(routeOption);
   }

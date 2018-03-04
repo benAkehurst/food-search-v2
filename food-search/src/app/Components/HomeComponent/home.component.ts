@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
                                                      locationsObj.userLong,
                                                      locationsObj.placeLat,
                                                      locationsObj.placeLong);
-            console.log(calculatedDistance);
+
             if (calculatedDistance > 2 && calculatedDistance < 4) {
                 this.to500Meters.push(locationsObj.place);
             } else if (calculatedDistance > 3 && calculatedDistance < 5) {
@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
     }
 
     public sortThreeOptions() {
-
+        
     }
 
     public makeRoute() {

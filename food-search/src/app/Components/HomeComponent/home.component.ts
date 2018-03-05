@@ -129,9 +129,6 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    // console.log(this.to500Meters);
-    // console.log(this.to1000Meters);
-    // console.log(this.to1500Meters);
     if (this.to500Meters && this.to1000Meters) {
         this.sortThreeOptions();
     } else {

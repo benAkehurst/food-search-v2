@@ -59,6 +59,9 @@ app.get('*', (req, res) => {
 //   :::::: S E R V E R   R O U T E S : :  :   :    :     :        :          :
 // ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 //
+//
+// ─── LOGIN AND REGISTER ─────────────────────────────────────────────────────────
+//
 /**
  * Registers a user in the database
  * @param {*} req
@@ -128,7 +131,13 @@ app.post('/login', function (req, res, next) {
         });
     });
 });
+//
+// ─────────────────────────────────────────────────────── LOGIN AND REGISTER ─────
+//
 
+//
+// ─── PLACES WEATHER USER LOCATION ───────────────────────────────────────────────
+//
 /**
  * Gets the users location from thier current ip address to use in the call to google places api
  */
@@ -143,6 +152,7 @@ rp(options)
             userLocaionViaIP = 'error finding location';
         }
     });
+
 
 
 /**
@@ -203,9 +213,26 @@ app.post('/routeOptions', function (req, res) {
     })
 });
 
+/**
+ * Builds a string to get an image of a location from Google Places API
+ * @param {*} req
+ * @param {*} res
+ */
+app.post('/getPlaceImage', function (req, res) {
+    console.log("Requesting Image url");
+    var base = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
+    var location = req.body.ref;
+    var sensor = "&sensor=false";
+    var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
+    var photoUrl = base + location + sensor + key;
+    res.send(photoUrl);
+    console.log("Photo Url sent to FE");
+}); 
 
 /**
  * Gets the current weather
+ * @param {*} req
+ * @param {*} res
  */
 app.post('/currentWeather', function (req, res) {
     var baseUrl = "https://api.openweathermap.org/data/2.5/forecast?q=";
@@ -224,29 +251,19 @@ app.post('/currentWeather', function (req, res) {
         }
     })
 });
+//
+// ───────────────────────────────────────────── PLACES WEATHER USER LOCATION ─────
+//
 
-/**
- * Builds a string to get an image of a location from Google Places API
- * @param {*} req
- * @param {*} res
- */
-app.post('/getPlaceImage', function (req, res) {
-    console.log("Requesting Image url");
-    var base = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
-    var location = req.body.ref;
-    var sensor = "&sensor=false";
-    var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
-    var photoUrl = base + location + sensor + key;
-    res.send(photoUrl);
-    console.log("Photo Url sent to FE");
-});
-
+//
+// ─── USER SPECIFIC ROUTES ───────────────────────────────────────────────────────
+//
 /**
  * Gets the whole user object from the database for the user profile
  * @param {*} req
  * @param {*} res
  */
-app.get("/userInfo/:userId", function (req, res) {
+app.get("/:userId/userInfo", function (req, res) {
     User.findById({ _id: req.params.userId }).exec(function (err, user) {
         if (err) {
             console.log("Error: " + " " + err);
@@ -263,7 +280,7 @@ app.get("/userInfo/:userId", function (req, res) {
  * @param {*} req
  * @param {*} res
  */
-app.post("/saveRoute", function (req, res) {
+app.post("/:userId/saveRoute", function (req, res) {
     var data = req.body.routes;
     var newRoute = {
         locationOne: data.loc1,
@@ -283,7 +300,7 @@ app.post("/saveRoute", function (req, res) {
  * @param {*} req
  * @param {*} res
  */
-app.delete("/deleteRoute/:uid/:_id", function (request, response) {
+app.delete("/:userId/deleteRoute/", function (request, response) {
     // console.log("ID" + request.params.id);
     User.findOne({ id: request.body.id })
         .exec(function (err, user) {
@@ -303,6 +320,9 @@ app.delete("/deleteRoute/:uid/:_id", function (request, response) {
             }
         })
 });
+//
+// ───────────────────────────────────────────────────── USER SPECIFIC ROUTES ─────
+//
 
 //
 // ────────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────

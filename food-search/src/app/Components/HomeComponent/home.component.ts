@@ -7,6 +7,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 import { NgModel } from '@angular/forms';
 import swal from 'sweetalert';
 import {  Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ArrayType } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -24,14 +25,15 @@ export class HomeComponent implements OnInit {
   weather: any = [];
   currentWeather: any = {};
   placesInformation: any = [];
-  weatherTime: any = '';
-  celciusTemp: any = '';
+  weatherTime: String = '';
+  celciusTemp: Number;
+  fahrenheitTemp: Number;
   distanceArr: any = [];
   geolocationPosition: Object = {};
   to500Meters: any = [];
   to1000Meters: any = [];
   to1500Meters: any = [];
-  randomRouteOption: any = {};
+  randomRouteOption: Object = {};
   title: String = 'Your Location';
   lat: Number;
   lng: Number;
@@ -198,7 +200,8 @@ export class HomeComponent implements OnInit {
 
   public convertToCelcius() {
     const kelvinTemp = this.currentWeather.main.temp;
-    this.celciusTemp = kelvinTemp - 273.15;
+    this.celciusTemp = Math.floor(kelvinTemp - 273.15);
+    this.fahrenheitTemp = Math.floor(((kelvinTemp - 273.15) * 1.8) + 32);
   }
 
   public goToPosts() {

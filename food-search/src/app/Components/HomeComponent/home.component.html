@@ -9,6 +9,10 @@
 <button type="button" class="btn btn-danger" (click)="sortThreeOptions()">Make a new route</button>
 <br>
 <br>
+<p *ngIf="celciusTemp">Current Temperature: {{celciusTemp}}&#8451;</p>
+<p *ngIf="fahrenheitTemp">Current Temperature: {{fahrenheitTemp}}&#8457;</p>
+<br>
+<br>
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
 </agm-map>

@@ -153,8 +153,6 @@ rp(options)
         }
     });
 
-
-
 /**
  * Calls Google Places API to get 20 loactions around the user
  * This is a call with default Params

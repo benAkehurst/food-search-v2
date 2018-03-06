@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
           this.geolocationPosition = position;
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
-          this.spinnerService.hide();
         }
       );
     } else {

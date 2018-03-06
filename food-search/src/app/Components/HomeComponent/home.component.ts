@@ -22,38 +22,19 @@ export class HomeComponent implements OnInit {
 
   errors: any;
   places: any = [];
-  weather: any = [];
-  currentWeather: any = {};
   placesInformation: any = [];
-  weatherTime: String = '';
-  celciusTemp: Number;
-  fahrenheitTemp: Number;
   distanceArr: any = [];
   geolocationPosition: Object = {};
   to500Meters: any = [];
   to1000Meters: any = [];
   to1500Meters: any = [];
   randomRouteOption: Object = {};
-  title: String = 'Your Location';
   lat: Number;
   lng: Number;
-  zoom: Number = 16;
 
   ngOnInit() {
     this.getUserLocation();
-    this.getCurrentWeather();
     this.spinnerService.show();
-  }
-
-  public getCurrentWeather() {
-    this.dataService.getCurrentWeather().subscribe(weather => {
-        this.weather = weather.list;
-        this.trimweather();
-    },
-    error => {
-        this.errors = error;
-        this.openSwal('Error', 'Sorry, we couldn\'t get any weather right now');
-    });
   }
 
   public getUserLocation() {
@@ -192,17 +173,6 @@ export class HomeComponent implements OnInit {
     return d;
   }
 
-  public trimweather() {
-      this.currentWeather = this.weather[0];
-      this.weatherTime = this.currentWeather.dt_txt;
-      this.convertToCelcius();
-  }
-
-  public convertToCelcius() {
-    const kelvinTemp = this.currentWeather.main.temp;
-    this.celciusTemp = Math.floor(kelvinTemp - 273.15);
-    this.fahrenheitTemp = Math.floor(((kelvinTemp - 273.15) * 1.8) + 32);
-  }
 
   public goToPosts() {
     this.router.navigate(['/posts']);

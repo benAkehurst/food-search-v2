@@ -15,6 +15,8 @@ import { FooterComponent } from '../FooterComponent/footer.component';
 import { RegisterComponent } from '../RegisterComponent/register.component';
 import { LoginComponent } from '../LoginComponent/login.component';
 import { HomeComponent } from '../HomeComponent/home.component';
+import { MapComponent } from '../HomeComponent/MapComponent/map.component';
+import { WeatherComponent } from '../HomeComponent/WeatherComponent/weather.component';
 import { PostsComponent } from '../PostsComponent/posts.component';
 import { ProfileComponent } from '../ProfileComponent/profile.component';
 import { PrivacyComponent } from '../Common/PrivacyComponent/privacy.component';
@@ -25,7 +27,6 @@ import { AboutComponent } from '../Common/AboutComponent/about.component';
 import { DataService } from '../../Services/data.service';
 
 // Extras
-import { AgmCoreModule } from '@agm/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
@@ -38,6 +39,8 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
+    WeatherComponent,
+    MapComponent,
     PostsComponent,
     PrivacyComponent,
     ContactComponent,
@@ -49,10 +52,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    Ng4LoadingSpinnerModule.forRoot(),
-    AgmCoreModule.forRoot({
-      apiKey: keys.GOOGLE_MAPS_API_KEY
-    })
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

@@ -25,12 +25,15 @@ export class MapComponent implements OnInit {
     this.spinnerService.hide();
     const directionsService = new google.maps.DirectionsService;
     const directionsDisplay = new google.maps.DirectionsRenderer;
+    const myLatLng = { lat: this.dataService.RouteOptions.lat, lng: this.dataService.RouteOptions.lng };
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
-      center: {
-        lat: this.dataService.RouteOptions.lat,
-        lng: this.dataService.RouteOptions.lng
-      }
+      center: myLatLng
+    });
+    const marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: 'You Are Here!'
     });
     // directionsDisplay.setMap(map);
     // this.calculateAndDisplayRoute(directionsService, directionsDisplay);

@@ -17,14 +17,14 @@ export class MapComponent implements OnInit {
 
   constructor(public dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) {}
 
+  randomRouteOption: Object = {};
+
   ngOnInit() {
-    setTimeout(() => { this.initGoogleMaps(); }, 1200);
+    setTimeout(() => { this.initGoogleMaps(); }, 1500);
   }
 
   public initGoogleMaps() {
     this.spinnerService.hide();
-    const directionsService = new google.maps.DirectionsService;
-    const directionsDisplay = new google.maps.DirectionsRenderer;
     const myLatLng = { lat: this.dataService.RouteOptions.lat, lng: this.dataService.RouteOptions.lng };
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
@@ -35,8 +35,23 @@ export class MapComponent implements OnInit {
       map: map,
       title: 'You Are Here!'
     });
-    // directionsDisplay.setMap(map);
-    // this.calculateAndDisplayRoute(directionsService, directionsDisplay);
+  }
+
+  public showRouteOnMapFromHomeComponent() {
+    this.randomRouteOption = this.dataService.RouteOptions.chosenRoute;
+    this.logThatRoute();
+    this.showRouteOnMap();
+  }
+
+  public logThatRoute() {
+    console.log(this.randomRouteOption);
+  }
+
+  public showRouteOnMap() {
+    const directionsService = new google.maps.DirectionsService;
+    const directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(google.map);
+    this.calculateAndDisplayRoute(directionsService, directionsDisplay);
   }
 
   public calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -75,11 +90,11 @@ export class MapComponent implements OnInit {
     });
   }
 
-    public openSwal(Title, text) {
+  public openSwal(Title, text) {
         swal({
             title: Title,
             text: text,
         });
-    }
+  }
 
 }

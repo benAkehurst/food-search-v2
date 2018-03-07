@@ -7,6 +7,7 @@ class RouteOptionsDataModel {
     radius1500: String = '1500';
     radius2000: Boolean = false;
     radius2500: Boolean = false;
+    chosenRoute: Object = {};
 }
 
 export default RouteOptionsDataModel;

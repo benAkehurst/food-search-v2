@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 import { Http } from '@angular/http/src/http';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { NgModel } from '@angular/forms';
 import swal from 'sweetalert';
 import {  Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ArrayType } from '@angular/compiler/src/output/output_ast';
+import { MapComponent } from './MapComponent/map.component';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { ArrayType } from '@angular/compiler/src/output/output_ast';
 })
 
 export class HomeComponent implements OnInit {
+  @ViewChild(MapComponent) mapComponent: MapComponent;
 
   constructor(private dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) {}
 
@@ -35,6 +37,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.getUserLocation();
     this.spinnerService.show();
+  }
+
+  showRouteOnMap() {
+    this.dataService.RouteOptions.chosenRoute = this.randomRouteOption;
+    this.mapComponent.showRouteOnMapFromHomeComponent();
   }
 
   public getUserLocation() {
@@ -137,10 +144,6 @@ export class HomeComponent implements OnInit {
     this.randomRouteOption = routeOption;
   }
 
-  public makeRoute() {
-
-  }
-
   public saveRoute() {
 
   }
@@ -171,7 +174,6 @@ export class HomeComponent implements OnInit {
     }
     return d;
   }
-
 
   public goToPosts() {
     this.router.navigate(['/posts']);

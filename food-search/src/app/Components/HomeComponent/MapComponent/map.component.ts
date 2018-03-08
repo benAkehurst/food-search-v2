@@ -58,7 +58,6 @@ public makeRouteObj() {
 }
 
   public displayDirections(locObj) {
-    console.log('inside displayDirections');
     const directionsService = new google.maps.DirectionsService();
     const loc1 = new google.maps.LatLng(locObj.loc1.geometry.location.lat, locObj.loc1.geometry.location.lng);
     const loc2 = new google.maps.LatLng(locObj.loc2.geometry.location.lat, locObj.loc2.geometry.location.lng);
@@ -67,7 +66,6 @@ public makeRouteObj() {
   }
 
   public initialize(locObj, loc1, loc2, loc3, directionsService) {
-    console.log('inside initialize');
     const directionsDisplay = new google.maps.DirectionsRenderer();
     const mapOptions = {
         zoom: 3,
@@ -79,7 +77,6 @@ public makeRouteObj() {
   }
 
   public calcRoute(loc1, loc2, loc3, directionsService, directionsDisplay) {
-    console.log('inside calcRoute');
       const selectedMode = 'WALKING';
       const request = {
         origin: loc1,
@@ -97,40 +94,6 @@ public makeRouteObj() {
         }
       });
     }
-
-
-
-
-// public showRouteOnMap(routeObj) {
-//   const directionsService = new google.maps.DirectionsService;
-//   const directionsDisplay = new google.maps.DirectionsRenderer;
-//   directionsDisplay.setMap('map');
-//   this.calculateAndDisplayRoute(directionsService, directionsDisplay);
-// }
-
-// public calculateAndDisplayRoute(directionsService, directionsDisplay) {
-
-//   const waypoint = {
-//     lat: 32.061391,
-//     lng: 34.763553
-//   };
-
-//   directionsService.route({
-//     origin: {
-//       lat: 32.06530399999999,
-//       lng: 34.7794
-//     },
-//     destination: {
-//       lat: 32.0656732,
-//       lng: 34.77173759999999
-//     },
-//     waypoints: waypoint,
-//     optimizeWaypoints: true,
-//     travelMode: 'WALKING'
-//   }, function (response, status) {
-//       directionsDisplay.setDirections(response);
-//   });
-// }
 
 public openSwal(Title, text) {
   swal({

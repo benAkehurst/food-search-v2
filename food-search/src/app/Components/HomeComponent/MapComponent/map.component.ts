@@ -15,10 +15,9 @@ declare var google: any;
 })
 export class MapComponent implements OnInit {
 
-  constructor(public dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
+constructor(public dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
 
-
-randomRouteOption: Object = {};
+  chosenRouteFromHomeComponent: Object = {};
 
 ngOnInit() {
   setTimeout(() => {
@@ -44,8 +43,13 @@ public initGoogleMaps() {
 }
 
 public showRouteOnMapFromHomeComponent() {
-  this.randomRouteOption = this.dataService.RouteOptions.chosenRoute;
+  this.chosenRouteFromHomeComponent = this.dataService.RouteOptions.chosenRoute;
   this.showRouteOnMap();
+  this.showRouteObj();
+}
+
+public showRouteObj() {
+  console.log(this.chosenRouteFromHomeComponent);
 }
 
 public showRouteOnMap() {
@@ -54,25 +58,6 @@ public showRouteOnMap() {
   directionsDisplay.setMap('map');
   this.calculateAndDisplayRoute(directionsService, directionsDisplay);
 }
-
-// public calcRoute(locObj) {
-//   var selectedMode = 'WALKING';
-//   var request = {
-//     origin: loc1,
-//     destination: loc3,
-//     waypoints: [{
-//       location: loc2,
-//       stopover: true
-//     }],
-//     optimizeWaypoints: true,
-//     travelMode: google.maps.TravelMode[selectedMode]
-//   };
-//   directionsService.route(request, function (response, status) {
-//     if (status == 'OK') {
-//       directionsDisplay.setDirections(response);
-//     }
-//   });
-// }
 
 public calculateAndDisplayRoute(directionsService, directionsDisplay) {
 

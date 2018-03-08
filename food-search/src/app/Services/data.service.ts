@@ -15,7 +15,6 @@ export class DataService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
   private localUrl = 'http://localhost:3000/';
-  chosenRoute: any = [];
   User: UserDataModel;
   Route: RouteDataModel;
   Place: PlaceDataModel;

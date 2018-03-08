@@ -20,7 +20,7 @@ export class FooterComponent implements OnInit {
 
     ngOnInit() {
 
-        this.getYear();
+        // this.getYear();
     }
 
     public getYear() {

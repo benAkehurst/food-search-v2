@@ -199,8 +199,8 @@ app.post('/routeOptions', function (req, res) {
     var radius = "&radius=1500";
     var type = "&type=cafe&type=bar&type=resturant"
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
-    // var searchTerm = base + lng + ',' + lat + radius + type + key;
-    var searchTerm = base + longLat + radius + type + key;
+    var searchTerm = base + lat + ',' + lng + radius + type + key;
+    // var searchTerm = base + longLat + radius + type + key;
     console.log(searchTerm);
     request(searchTerm, function (error, response, body) {
         if (!error && response.statusCode == 200) {

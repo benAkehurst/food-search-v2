@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
             this.placesInformation.push(placeObject);
         }
     });
-    console.log(this.placesInformation);
+    // console.log(this.placesInformation);
     if (this.placesInformation) {
       this.sortPlaceDistanceFromMe();
     } else {
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
   }
 
   public sortPlaceDistanceFromMe() {
-    console.log(this.placesInformation);
+    // console.log(this.placesInformation);
     this.placesInformation.forEach(element => {
       const locationsObj = {
         place: element,
@@ -104,16 +104,18 @@ export class HomeComponent implements OnInit {
         placeLong: element.geometry.location.lng,
         placeLat: element.geometry.location.lat
       };
-      const calculatedDistance = this.distance(locationsObj.userLat,
+      // console.log(locationsObj);
+      const calculatedDistance = this.distance(
+        locationsObj.userLat,
         locationsObj.userLong,
         locationsObj.placeLat,
         locationsObj.placeLong);
-
-      if (calculatedDistance > 2 && calculatedDistance < 4) {
+      // console.log(calculatedDistance);
+      if (calculatedDistance < 499) {
         this.to500Meters.push(locationsObj.place);
-      } else if (calculatedDistance > 3 && calculatedDistance < 5) {
+      } else if (calculatedDistance > 500 && calculatedDistance < 999) {
         this.to1000Meters.push(locationsObj.place);
-      } else if (calculatedDistance > 4 && calculatedDistance < 6) {
+      } else if (calculatedDistance > 1000 && calculatedDistance <= 1500) {
         this.to1500Meters.push(locationsObj.place);
       }
     });
@@ -126,6 +128,9 @@ export class HomeComponent implements OnInit {
   }
 
   public sortThreeOptions() {
+    // console.log(this.to500Meters);
+    // console.log(this.to1000Meters);
+    // console.log(this.to1500Meters);
     const randomNumber1 = Math.floor(Math.random() * this.to500Meters.length);
     const randomNumber2 = Math.floor(Math.random() * this.to1000Meters.length);
     const randomNumber3 = Math.floor(Math.random() * this.to1500Meters.length);
@@ -140,7 +145,7 @@ export class HomeComponent implements OnInit {
         locationTwo: locationTwo,
         locationThree: locationThree
     };
-    console.log(routeOption);
+    // console.log(routeOption);
     this.randomRouteOption = routeOption;
   }
 

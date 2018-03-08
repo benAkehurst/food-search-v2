@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     this.spinnerService.show();
   }
 
-  showRouteOnMap() {
+  public showRouteOnMap() {
     this.dataService.RouteOptions.chosenRoute = this.randomRouteOption;
     this.mapComponent.showRouteOnMapFromHomeComponent();
   }

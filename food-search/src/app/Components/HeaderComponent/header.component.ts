@@ -44,6 +44,10 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/home']);
     }
 
+    public goToAboutPage() {
+        this.router.navigate(['/about']);
+    }
+
     public goToProfileLink() {
         this.router.navigate(['/profile']);
     }

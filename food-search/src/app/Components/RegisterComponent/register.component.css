@@ -6,6 +6,10 @@
   color: darkgray;
 }
 
+.why-register-container {
+  padding: 12px;
+}
+
 .login {
   width: 400px;
   margin: 16px auto;

@@ -11,6 +11,14 @@
     <p>
       <input type="password" placeholder="Password" required [(ngModel)]="dataService.User.password" [ngModelOptions]="{standalone: true}">
     </p>
+    <div class="why-register-container">
+      <span class="why-text">When you register you'll have these awesome benefits!</span>
+      <ul class="reason-list">
+        <li class="why-item">The ability to save routes</li>
+        <li class="why-item">Change and edit your route search parameters</li>
+        <li class="why-item">View all your saved routes and share them with friends</li>
+      </ul>
+    </div>
     <div class="privacy-container">
       <span class="privacy-text">We guarantee 100% privacy. Your information will not be shared with anybody.</span>
       <br>
@@ -25,4 +33,3 @@
     <span (click)="goToLogin()"> Login Here.</span>
   </p>
 </div>
-<app-footer></app-footer>

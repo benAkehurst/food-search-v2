@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary d-flex justify-content-between">
+<mat-toolbar color="primary">
   <div class="main-buttons-container">
     <span class="navbar-brand header-link main-link" (click)="goToHomeLink()">Munch</span>
     <span class="nav-item header-link navbar-brand map-link" (click)="goToMapLink()">Map</span>
@@ -8,4 +8,4 @@
     <span class="nav-item header-link navbar-brand login-link" (click)="goToLoginLink()" *ngIf="!loggedIn">Login</span>
     <span class="nav-item header-link navbar-brand register-link" (click)="goToRegisterLink()" *ngIf="!loggedIn">Register</span>
   </div>
-</nav>
+</mat-toolbar>

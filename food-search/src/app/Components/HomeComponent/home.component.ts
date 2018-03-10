@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
           this.lng = position.coords.longitude;
         }
       );
+      this.getAllPlaces();
     } else {
       this.openSwal('Error', 'Sorry, we couldn\'t find where you are right now');
     }

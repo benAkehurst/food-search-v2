@@ -4,9 +4,11 @@
     <span class="nav-item header-link navbar-brand map-link" (click)="goToMapLink()">Map</span>
     <span class="nav-item header-link about-link" (click)="goToAboutPage()">About</span>
   </div>
+  <div class="example-fill-remaining-space"></div>
   <div class="login-register-div float-right">
     <span class="nav-item header-link navbar-brand profile-link" (click)="goToProfileLink()" *ngIf="loggedIn">Profile</span>
     <span class="nav-item header-link navbar-brand login-link" (click)="goToLoginLink()" *ngIf="!loggedIn">Login</span>
     <span class="nav-item header-link navbar-brand register-link" (click)="goToRegisterLink()" *ngIf="!loggedIn">Register</span>
   </div>
+  <app-weather></app-weather>
 </mat-toolbar>

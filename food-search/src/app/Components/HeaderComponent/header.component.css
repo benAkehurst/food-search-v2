@@ -10,3 +10,11 @@
 .login-register-div {
     margin-left: 15px;
 }
+
+app-weather {
+    cursor: pointer;
+}
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}

@@ -1,2 +1,3 @@
-<p *ngIf="celciusTemp">Current Temperature: {{celciusTemp}}&#8451;</p>
-<p *ngIf="fahrenheitTemp">Current Temperature: {{fahrenheitTemp}}&#8457;</p>
+<div *ngIf="showF == false" (click)="changeToF()">{{celciusTemp}}&#8451;</div>
+<div *ngIf="showF == true" (click)="changeToC()">{{fahrenheitTemp}}&#8457;</div>
+

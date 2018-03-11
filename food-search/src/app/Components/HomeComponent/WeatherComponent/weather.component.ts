@@ -19,6 +19,7 @@ export class WeatherComponent implements OnInit {
     weatherTime: String = '';
     celciusTemp: Number;
     fahrenheitTemp: Number;
+    showF: Boolean = false;
 
     ngOnInit() {
         this.getCurrentWeather();
@@ -45,6 +46,14 @@ export class WeatherComponent implements OnInit {
         const kelvinTemp = this.currentWeather.main.temp;
         this.celciusTemp = Math.floor(kelvinTemp - 273.15);
         this.fahrenheitTemp = Math.floor(((kelvinTemp - 273.15) * 1.8) + 32);
+    }
+
+    public changeToF() {
+        this.showF = true;
+    }
+
+    public changeToC() {
+        this.showF = false;
     }
 
     public openSwal(Title, text) {

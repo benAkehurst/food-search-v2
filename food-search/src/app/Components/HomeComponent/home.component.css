@@ -23,3 +23,7 @@ mat-toolbar-row {
   right: 20px;
   color: white;
 }
+
+.place-card {
+  cursor: pointer;
+}

@@ -1,13 +1,37 @@
-<app-header></app-header>
-<ng4-loading-spinner> </ng4-loading-spinner>
-<br>
-<br>
-<button type="button" class="btn btn-info" (click)="getAllPlaces()">Get New Route Options</button>
-<button type="button" class="btn btn-danger" (click)="sortThreeOptions()">Shuffle A New Route</button>
-<button type="button" class="btn btn-warning" (click)="showRouteOnMap()">Show Me the Route</button>
-<br>
-<br>
-<app-weather></app-weather>
-<br>
-<br>
-<app-map></app-map>
+<div class="app-container" *ngIf="isDataLoaded">
+  <app-header></app-header>
+  <ng4-loading-spinner> </ng4-loading-spinner>
+  <div class="container-fluid">
+    <div class="route-view">
+      <mat-card class="button-container">
+        <button class="btn btn-info" (click)="getAllPlaces()">New Route</button>
+        <button class="btn btn-info" (click)="showRouteOnMap()">Show Me the Route</button>
+        <button class="btn btn-info" (click)="sortThreeOptions()">Shuffle Current Route</button>
+      </mat-card>
+      <mat-card>
+        <mat-card-title>Route Options</mat-card-title>
+        <mat-card-content>
+          <div class="placeOne place-card">
+            <mat-card (click)="viewPlace(this.routeOption.locationOne)">Marker A:</mat-card>
+          </div>
+          <div class="placeTwo place-card">
+            <mat-card (click)="viewPlace(this.routeOption.locationTwo)">Marker B:</mat-card>
+          </div>
+          <div class="placeThree place-card">
+            <mat-card (click)="viewPlace(this.routeOption.locationThree)">Marker C:</mat-card>
+          </div>
+        </mat-card-content>
+        <button class="btn btn-info" (click)="saveRoute()" *ngIf="this.loggedIn === true">Save this Route</button>
+      </mat-card>
+    </div>
+    <div class="map-container">
+      <app-map></app-map>
+    </div>
+    <mat-card>
+      <h1>Place Name</h1>
+      <p>Place Image</p>
+      <p> Other place details</p>
+      <button class="btn btn-info" (click)="savePlace()" *ngIf="this.loggedIn === true">Save this Place</button>
+    </mat-card>
+  </div>
+</div>

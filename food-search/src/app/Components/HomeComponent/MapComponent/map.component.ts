@@ -26,7 +26,6 @@ ngOnInit() {
 }
 
 public initGoogleMaps() {
-  this.spinnerService.hide();
   const myLatLng = {
     lat: this.dataService.RouteOptions.lat,
     lng: this.dataService.RouteOptions.lng
@@ -40,6 +39,7 @@ public initGoogleMaps() {
     map: map,
     title: 'You Are Here!'
   });
+  this.spinnerService.hide();
 }
 
 public showRouteOnMapFromHomeComponent() {

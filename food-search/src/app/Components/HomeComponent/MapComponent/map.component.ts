@@ -22,7 +22,7 @@ constructor(public dataService: DataService, private router: Router, private spi
 ngOnInit() {
   setTimeout(() => {
     this.initGoogleMaps();
-  }, 1500);
+  }, 2000);
 }
 
 public initGoogleMaps() {

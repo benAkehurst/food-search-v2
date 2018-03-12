@@ -34,17 +34,14 @@ to500Meters: any = [];
 to1000Meters: any = [];
 to1500Meters: any = [];
 randomRouteOption: Object = {};
-routeOption: any = [];
+routeOption: any = {};
 lat: Number;
 lng: Number;
 viewPlaceDetails: any = {};
 
 ngOnInit() {
-<<<<<<< HEAD
   // this.getUserLocation();
-=======
->>>>>>> 2d8d226c03b70a8ab54d768ee1716771e4633ae0
-  this.getUserLocation().then(() => this.isDataLoaded = true);
+  this.getUserLocation();
   this.spinnerService.show();
   setInterval(() => {
     this.checkLoggedInStaus();
@@ -60,6 +57,7 @@ public getUserLocation() {
   if (window.navigator && window.navigator.geolocation) {
     window.navigator.geolocation.getCurrentPosition(
       position => {
+        console.log(position);
         this.dataService.RouteOptions.lat = position.coords.latitude;
         this.dataService.RouteOptions.lng = position.coords.longitude;
         this.geolocationPosition = position;
@@ -67,7 +65,7 @@ public getUserLocation() {
         this.lng = position.coords.longitude;
       }
     );
-    this.getAllPlaces();
+    this.isDataLoaded = true;
   } else {
     this.openSwal('Error', 'Sorry, we couldn\'t find where you are right now');
   }
@@ -108,7 +106,7 @@ public stripInformationAboutPlace() {
 }
 
 public sortPlaceDistanceFromMe() {
-  // console.log(this.placesInformation);
+  console.log(this.placesInformation);
   this.placesInformation.forEach(element => {
     const locationsObj = {
       place: element,
@@ -161,12 +159,9 @@ public sortThreeOptions() {
   console.log(routeOption);
   this.routeOption = routeOption;
   this.randomRouteOption = routeOption;
-<<<<<<< HEAD
   // this.getAllPlaces();
-  this.isDataLoaded = true;
+  // this.isDataLoaded = true;
   this.changeDetectorRef.detectChanges();
-=======
->>>>>>> 2d8d226c03b70a8ab54d768ee1716771e4633ae0
 }
 
 public saveRoute() {

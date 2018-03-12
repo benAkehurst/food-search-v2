@@ -1,3 +1,8 @@
+mat-spinner {
+  margin-left: 25%;
+  margin-top: 25%;
+}
+
 app-weather {
   height: 300px;;
 }
@@ -35,8 +40,19 @@ mat-toolbar-row {
 .buttons-cont-one,
 .buttons-cont-two {
   margin: 5px 0 5px 0;
-  width: 80%;
-  margin-left: 10%;
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: center;
+}
+
+.route-button {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+  background-color: #27ae60;
+  color: oldlace;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 import { Http } from '@angular/http/src/http';
 import { Router } from '@angular/router';
@@ -19,7 +19,10 @@ import { MapComponent } from './MapComponent/map.component';
 export class HomeComponent implements OnInit {
 @ViewChild(MapComponent) mapComponent: MapComponent;
 
-constructor(public dataService: DataService, private router: Router, private spinnerService: Ng4LoadingSpinnerService) { }
+constructor(public dataService: DataService,
+            private router: Router,
+            private spinnerService: Ng4LoadingSpinnerService,
+            @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef) { }
 errors: any;
 isDataLoaded: Boolean = false;
 loggedIn: Boolean = false;
@@ -34,9 +37,11 @@ randomRouteOption: Object = {};
 routeOption: any = [];
 lat: Number;
 lng: Number;
+viewPlaceDetails: any = {};
 
 ngOnInit() {
-  this.getUserLocation();
+  // this.getUserLocation();
+  this.getUserLocation().then(() => this.isDataLoaded = true);
   this.spinnerService.show();
   setInterval(() => {
     this.checkLoggedInStaus();
@@ -153,7 +158,9 @@ public sortThreeOptions() {
   console.log(routeOption);
   this.routeOption = routeOption;
   this.randomRouteOption = routeOption;
+  // this.getAllPlaces();
   this.isDataLoaded = true;
+  this.changeDetectorRef.detectChanges();
 }
 
 public saveRoute() {
@@ -162,6 +169,7 @@ public saveRoute() {
 
 public viewPlace(location) {
   console.log(location);
+  const thisLocation = location;
 }
 
 public savePlace() {

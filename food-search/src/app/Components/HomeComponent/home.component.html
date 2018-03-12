@@ -1,36 +1,38 @@
+<mat-spinner *ngIf="!isDataLoaded"></mat-spinner>
 <div class="app-container" *ngIf="isDataLoaded">
   <app-header></app-header>
   <ng4-loading-spinner> </ng4-loading-spinner>
   <div class="container-fluid">
     <div class="route-view">
-      <mat-card class="button-container">
-        <button class="btn btn-info" (click)="getAllPlaces()">New Route</button>
-        <button class="btn btn-info" (click)="showRouteOnMap()">Show Me the Route</button>
-        <button class="btn btn-info" (click)="sortThreeOptions()">Shuffle Current Route</button>
-      </mat-card>
       <mat-card>
         <mat-card-title>Route Options</mat-card-title>
         <mat-card-content>
           <div class="placeOne place-card">
-            <mat-card (click)="viewPlace(this.routeOption.locationOne)">Marker A:</mat-card>
+            <mat-card (click)="viewPlace(this.routeOption.locationOne)">Marker A: {{routeOption.locationOne.name}}</mat-card>
           </div>
           <div class="placeTwo place-card">
-            <mat-card (click)="viewPlace(this.routeOption.locationTwo)">Marker B:</mat-card>
+            <mat-card (click)="viewPlace(this.routeOption.locationTwo)">Marker B: {{routeOption.locationTwo.name}}</mat-card>
           </div>
           <div class="placeThree place-card">
-            <mat-card (click)="viewPlace(this.routeOption.locationThree)">Marker C:</mat-card>
+            <mat-card (click)="viewPlace(this.routeOption.locationThree)">Marker C: {{routeOption.locationThree.name}}</mat-card>
           </div>
         </mat-card-content>
-        <button class="btn btn-info" (click)="saveRoute()" *ngIf="this.loggedIn === true">Save this Route</button>
+        <div class="buttons-cont-one fill-remaining-space">
+          <button class="btn btn-info" (click)="getAllPlaces()">New Route</button>
+          <button class="btn btn-info" *ngIf="this.routeOption" (click)="sortThreeOptions()">Shuffle Current Route</button>
+        </div>
+        <div class="buttons-cont-two fill-remaining-space">
+          <button class="btn btn-info" (click)="saveRoute()" *ngIf="this.loggedIn === true">Save this Route</button>
+          <button class="btn btn-info" *ngIf="this.routeOption" (click)="showRouteOnMap()">Show Me the Route</button>
+        </div>
       </mat-card>
     </div>
     <div class="map-container">
       <app-map></app-map>
     </div>
     <mat-card>
-      <h1>Place Name</h1>
-      <p>Place Image</p>
-      <p> Other place details</p>
+      <h1>{{this.viewPlaceDetails.name}}</h1>
+      <p>{{this.viewPlaceDetails.rating}}</p>
       <button class="btn btn-info" (click)="savePlace()" *ngIf="this.loggedIn === true">Save this Place</button>
     </mat-card>
   </div>

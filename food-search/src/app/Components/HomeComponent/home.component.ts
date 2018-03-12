@@ -36,7 +36,7 @@ lat: Number;
 lng: Number;
 
 ngOnInit() {
-  this.getUserLocation();
+  this.getUserLocation().then(() => this.isDataLoaded = true);
   this.spinnerService.show();
   setInterval(() => {
     this.checkLoggedInStaus();
@@ -153,7 +153,6 @@ public sortThreeOptions() {
   console.log(routeOption);
   this.routeOption = routeOption;
   this.randomRouteOption = routeOption;
-  this.isDataLoaded = true;
 }
 
 public saveRoute() {

@@ -13,6 +13,9 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
+    messageName: String = '';
+    messageMessage: String = '';
+    messageEmail: String = '';
 
     constructor(private dataService: DataService, private router: Router) { }
 
@@ -20,8 +23,26 @@ export class ContactComponent implements OnInit {
 
     }
 
+    public sendMessage() {
+        console.log('send message clicked');
+        const messageObj = {
+            'name': this.messageName,
+            'message': this.messageMessage,
+            'email': this.messageEmail
+        };
+        console.log(messageObj);
+        this.openSwal('', 'Your message has been sent successfully');
+    }
+
     public goToPrivacyPolicy() {
         this.router.navigate(['/privacy']);
+    }
+
+    public openSwal(Title, text) {
+        swal({
+            title: Title,
+            text: text,
+        });
     }
 
 }

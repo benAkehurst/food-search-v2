@@ -40,7 +40,10 @@ lng: Number;
 viewPlaceDetails: any = {};
 
 ngOnInit() {
+<<<<<<< HEAD
   // this.getUserLocation();
+=======
+>>>>>>> 2d8d226c03b70a8ab54d768ee1716771e4633ae0
   this.getUserLocation().then(() => this.isDataLoaded = true);
   this.spinnerService.show();
   setInterval(() => {
@@ -158,9 +161,12 @@ public sortThreeOptions() {
   console.log(routeOption);
   this.routeOption = routeOption;
   this.randomRouteOption = routeOption;
+<<<<<<< HEAD
   // this.getAllPlaces();
   this.isDataLoaded = true;
   this.changeDetectorRef.detectChanges();
+=======
+>>>>>>> 2d8d226c03b70a8ab54d768ee1716771e4633ae0
 }
 
 public saveRoute() {

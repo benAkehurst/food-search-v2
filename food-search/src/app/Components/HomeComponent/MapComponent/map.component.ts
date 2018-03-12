@@ -59,13 +59,14 @@ public makeRouteObj() {
 
   public displayDirections(locObj) {
     const directionsService = new google.maps.DirectionsService();
+    const originLocation = new google.maps.LatLng(this.dataService.RouteOptions.lat, this.dataService.RouteOptions.lng);
     const loc1 = new google.maps.LatLng(locObj.loc1.geometry.location.lat, locObj.loc1.geometry.location.lng);
     const loc2 = new google.maps.LatLng(locObj.loc2.geometry.location.lat, locObj.loc2.geometry.location.lng);
     const loc3 = new google.maps.LatLng(locObj.loc3.geometry.location.lat, locObj.loc3.geometry.location.lng);
-    this.initialize(locObj, loc1, loc2, loc3, directionsService);
+    this.initialize(locObj, originLocation, loc1, loc2, loc3, directionsService);
   }
 
-  public initialize(locObj, loc1, loc2, loc3, directionsService) {
+  public initialize(locObj, originLocation, loc1, loc2, loc3, directionsService) {
     const directionsDisplay = new google.maps.DirectionsRenderer();
     const mapOptions = {
         zoom: 3,
@@ -73,18 +74,18 @@ public makeRouteObj() {
     };
     Map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsDisplay.setMap(Map);
-    this.calcRoute(loc1, loc2, loc3, directionsService, directionsDisplay);
+    this.calcRoute(originLocation, loc1, loc2, loc3, directionsService, directionsDisplay);
   }
 
-  public calcRoute(loc1, loc2, loc3, directionsService, directionsDisplay) {
+  public calcRoute(originLocation, loc1, loc2, loc3, directionsService, directionsDisplay) {
       const selectedMode = 'WALKING';
       const request = {
-        origin: loc1,
+        origin: originLocation,
         destination: loc3,
-        waypoints: [{
-          location: loc2,
-          stopover: true
-        }],
+        waypoints: [
+          { location: loc1, stopover: true },
+          { location: loc2, stopover: true }
+        ],
         optimizeWaypoints: true,
         travelMode: google.maps.TravelMode[selectedMode]
       };

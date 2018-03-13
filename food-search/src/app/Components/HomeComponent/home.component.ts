@@ -35,9 +35,12 @@ to1000Meters: any = [];
 to1500Meters: any = [];
 randomRouteOption: Object = {};
 routeOption: any = {};
+chosenPlace: any = {};
 lat: Number;
 lng: Number;
 viewPlaceDetails: any = {};
+viewPlaceClicked: Boolean = false;
+placeImageUrl: String = '';
 
 ngOnInit() {
   // this.getUserLocation();
@@ -57,7 +60,7 @@ public getUserLocation() {
   if (window.navigator && window.navigator.geolocation) {
     window.navigator.geolocation.getCurrentPosition(
       position => {
-        console.log(position);
+        // console.log(position);
         this.dataService.RouteOptions.lat = position.coords.latitude;
         this.dataService.RouteOptions.lng = position.coords.longitude;
         this.geolocationPosition = position;
@@ -74,7 +77,7 @@ public getUserLocation() {
 public getAllPlaces() {
   this.dataService.getAllPlaces().subscribe(places => {
       this.places = places.results;
-      console.log(this.places);
+      // console.log(this.places);
       this.stripInformationAboutPlace();
     },
     error => {
@@ -106,7 +109,7 @@ public stripInformationAboutPlace() {
 }
 
 public sortPlaceDistanceFromMe() {
-  console.log(this.placesInformation);
+  // console.log(this.placesInformation);
   this.placesInformation.forEach(element => {
     const locationsObj = {
       place: element,
@@ -170,7 +173,17 @@ public saveRoute() {
 
 public viewPlace(location) {
   console.log(location);
+  this.viewPlaceClicked = true;
+  this.chosenPlace = location;
   const thisLocation = location;
+  const placeId = thisLocation.photos[0].photo_reference;
+  this.dataService.getPlaceImage(placeId).subscribe(response => {
+    this.placeImageUrl = response.data;
+  },
+  error => {
+    this.errors = error;
+    this.openSwal('Error', 'Sorry, we couldn\'t get an image right now');
+  });
 }
 
 public savePlace() {

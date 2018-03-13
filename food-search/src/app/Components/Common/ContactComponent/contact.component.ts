@@ -13,25 +13,37 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
+    constructor(private dataService: DataService, private router: Router) { }
+
+    errors: any;
     messageName: String = '';
     messageMessage: String = '';
     messageEmail: String = '';
-
-    constructor(private dataService: DataService, private router: Router) { }
 
     ngOnInit() {
 
     }
 
     public sendMessage() {
-        console.log('send message clicked');
+        // console.log('send message clicked');
         const messageObj = {
             'name': this.messageName,
             'message': this.messageMessage,
             'email': this.messageEmail
         };
-        console.log(messageObj);
-        this.openSwal('', 'Your message has been sent successfully');
+        // console.log(messageObj);
+        this.dataService.sendContactMessage(messageObj).subscribe(response => {
+            if (response.status = true) {
+                this.messageName = '';
+                this.messageMessage  = '';
+                this.messageEmail  = '';
+                this.openSwal('', 'Your message has been sent successfully');
+            }
+        },
+            error => {
+                this.errors = error;
+                this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
+            });
     }
 
     public goToPrivacyPolicy() {

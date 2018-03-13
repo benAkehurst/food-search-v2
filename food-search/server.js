@@ -131,6 +131,28 @@ app.post('/login', function (req, res, next) {
         });
     });
 });
+
+/**
+ * Sends message from about us to admin
+ * @param {*} req
+ * @param {*} res
+ */
+app.post("/sendContactUsMessage", function (req, res) {
+    const api_key = 'key-' + process.env.MAILGUN_PUB_API_KEY;
+    const DOMAIN = process.env.MAILGUN_DOMAIN;
+    const mailgun = require('mailgun-js')({ apiKey: api_key, domain: DOMAIN });
+    const data = req.body.data;
+    const messageDetails = {
+        from: data.name  + ' ' + data.email,
+        to: process.env.MAILGUN_TO_EMAIL,
+        subject: 'Message From Munch User' + ' ' + data.name,
+        text: data.message
+    };
+    console.log(messageDetails);
+    mailgun.messages().send(messageDetails, function (error, body) {
+        res.send({ 'status': true, 'data': body } )
+    });
+});
 //
 // ─────────────────────────────────────────────────────── LOGIN AND REGISTER ─────
 //
@@ -152,39 +174,6 @@ rp(options)
             userLocaionViaIP = 'error finding location';
         }
     });
-
-/**
- * Calls Google Places API to get 20 loactions around the user
- * This is a call with default Params
- * @param {*} req
- * @param {*} res
- */
-/*
-app.post('/routeOptions', function (req, res) {
-    var data = req.body.data;
-    console.log(data);
-    console.log('Requesting Places from Goolge API');
-    var base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
-    var lat = data.lat;
-    var lng = data.lng;
-    var longLat = userLocaionViaIP.loc;
-    var radius = "&radius=1500";
-    var type = "&type=cafe&type=bar"
-    var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
-    var searchTerm = base + longLat + radius + type + key;
-    console.log(searchTerm);
-    request(searchTerm, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            var options = JSON.parse(body)
-            // do more stuff
-            // console.log(options);
-            res.send(options);
-            console.log('Places sent to FE');
-        }
-    })
-});
-*/
-
 /**
  * This call will be used once the location ip has been checked and confirmed on the front end
  */
@@ -218,12 +207,14 @@ app.post('/routeOptions', function (req, res) {
  */
 app.post('/getPlaceImage', function (req, res) {
     console.log("Requesting Image url");
+    // console.log(req.body);
     var base = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
-    var location = req.body.ref;
-    var sensor = "&sensor=false";
+    var location = req.body.data;
+    // var sensor = "&sensor=false";
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
-    var photoUrl = base + location + sensor + key;
-    res.send(photoUrl);
+    var photoUrl = base + location + key;
+    // console.log(photoUrl);
+    res.send( { 'status': true, 'data': photoUrl} );
     console.log("Photo Url sent to FE");
 }); 
 
@@ -294,13 +285,33 @@ app.post("/:userId/saveRoute", function (req, res) {
 });
 
 /**
+ * Saves a new place to the user model in the database
+ * @param {*} req
+ * @param {*} res
+ */
+app.post("/:userId/savePlace", function (req, res) {
+    var data = req.body.routes;
+    var newRoute = {
+        locationOne: data.loc1,
+        locationTwo: data.loc2,
+        locationThree: data.loc3
+    }
+    User.findByIdAndUpdate(req.body.uid, { "$push": { "savedRoutes": newRoute } }).exec(function (err, user) {
+        if (err) {
+            console.log("Error: " + err)
+        }
+        res.send({ success: true });
+    })
+});
+
+/**
  * Removes a route from the user model in the database
  * @param {*} req
  * @param {*} res
  */
-app.delete("/:userId/deleteRoute/", function (request, response) {
+app.delete("/:userId/deleteRoute", function (req, res) {
     // console.log("ID" + request.params.id);
-    User.findOne({ id: request.body.id })
+    User.findOne({ id: req.body.id })
         .exec(function (err, user) {
             if (err) {
                 console.log("Error" + " " + err)
@@ -313,11 +324,40 @@ app.delete("/:userId/deleteRoute/", function (request, response) {
                             user.save();
                         }
                     }
-                    response.send(user);
+                    res.send(user);
                 }
             }
         })
 });
+
+/**
+ * Removes a route from the user model in the database
+ * @param {*} req
+ * @param {*} res
+ */
+app.delete("/:userId/deletePlace", function (req, res) {
+    // console.log("ID" + request.params.id);
+    User.findOne({ id: req.body.id })
+        .exec(function (err, user) {
+            if (err) {
+                console.log("Error" + " " + err)
+            } else {
+                if (user) {
+                    console.log("User " + user);
+                    for (var i = 0; i < user.routes.length; i++) {
+                        if (user.routes[i]._id == request.params._id) {
+                            user.routes.splice(i, 1)
+                            user.save();
+                        }
+                    }
+                    res.send(user);
+                }
+            }
+        })
+});
+
+
+
 //
 // ───────────────────────────────────────────────────── USER SPECIFIC ROUTES ─────
 //

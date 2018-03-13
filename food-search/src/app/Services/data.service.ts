@@ -27,37 +27,86 @@ export class DataService {
     this.RouteOptions = new RouteOptionsDataModel();
   }
 
-  /**
-   * HANDLES REGISTERING A NEW USER
-   * @param this.User
-   */
-  registerUser() { return this.http.post(this.localUrl + 'registerUser', {data: this.User}, {headers: this.headers})
-    .map(res => res.json());
-  }
-
-  /**
-   * HANDLES LOGIN FOR A USER
-   * @param this.User
-   */
-  loginUser() {
-    return this.http.post(this.localUrl + 'login', { data: this.User }, { headers: this.headers })
+  //
+  // ─── USER REQUESTS ──────────────────────────────────────────────────────────────
+  //
+    /**
+    * HANDLES REGISTERING A NEW USER
+    * @param this.User
+    */
+    registerUser() {
+      return this.http
+      .post(this.localUrl + 'registerUser', { data: this.User }, { headers: this.headers })
       .map(res => res.json());
-  }
+    }
 
-  /**
-   * GETS 20 PLACES FROM GOOGLE PLACES API TO BUILD ROUTE
-   */
-  getAllPlaces() {
-    return this.http.post(this.localUrl + 'routeOptions', { data: this.RouteOptions}, { headers: this.headers})
-    .map(res => res.json());
-  }
-
-  /**
-   * GETS THE WEATHER FOR THE USERS CITY VIA IP ADDRESS
-   */
-  getCurrentWeather() {
-    return this.http.post(this.localUrl + 'currentWeather', { headers: this.headers })
+    /**
+    * HANDLES LOGIN FOR A USER
+    * @param this.User
+    */
+    loginUser() {
+      return this.http
+      .post(this.localUrl + 'login', { data: this.User }, { headers: this.headers })
       .map(res => res.json());
-  }
+    }
+
+    sendContactMessage(messageObj) {
+      return this.http
+      .post(this.localUrl + 'sendContactUsMessage', { data: messageObj}, {headers: this.headers})
+      .map(res => res.json());
+    }
+  //
+  // ──────────────────────────────────────────────────────────── USER REQUESTS ─────
+  //
+
+  //
+  // ─── HOME REQUESTS ──────────────────────────────────────────────────────────────
+  //
+    /**
+    * GETS 20 PLACES FROM GOOGLE PLACES API TO BUILD ROUTE
+    */
+    getAllPlaces() {
+      return this.http
+      .post(this.localUrl + 'routeOptions', { data: this.RouteOptions }, { headers: this.headers })
+      .map(res => res.json());
+    }
+
+    /**
+    * BUILDS A URL FOR A PLACE IMAGE FROM THE SERVER
+    * @param placeId
+    */
+    getPlaceImage(placeId) {
+      return this.http
+      .post(this.localUrl + 'getPlaceImage', { data: placeId }, { headers: this.headers })
+      .map(res => res.json());
+    }
+  //
+  // ──────────────────────────────────────────────────────────── HOME REQUESTS ─────
+  //
+
+  //
+  // ─── HEADER REQUESTS ────────────────────────────────────────────────────────────
+  //
+    /**
+    * GETS THE WEATHER FOR THE USERS CITY VIA IP ADDRESS
+    */
+    getCurrentWeather() {
+      return this.http
+      .post(this.localUrl + 'currentWeather', { headers: this.headers })
+      .map(res => res.json());
+    }
+  //
+  // ────────────────────────────────────────────────────────── HEADER REQUESTS ─────
+  //
+
+
+  //
+  // ─── MAP REQUESTS ───────────────────────────────────────────────────────────────
+  //
+
+
+  //
+  // ───────────────────────────────────────────────────────────── MAP REQUESTS ─────
+  //
 
 }

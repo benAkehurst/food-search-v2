@@ -18,3 +18,9 @@ app-weather {
 .fill-remaining-space {
   flex: 1 1 auto;
 }
+
+.mat-toolbar.mat-primary {
+  background: #03A9F4;
+  color: #fff;
+}
+

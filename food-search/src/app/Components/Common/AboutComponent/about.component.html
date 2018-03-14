@@ -1,16 +1,28 @@
 <app-header></app-header>
 <div class="container-fluid">
-    <div class="row">
-        <h1>About Us</h1>
-        <div class="about-text">
-            This came about...
+    <div class="page-container">
+        <div class="about-container">
+            <h1>About Us</h1>
+            <div class="about-text">
+                <p>
+                    I used to live in Tel Aviv, and when I moved out of the city, I suddenly didn't know where to go. So I built Munch to guide
+                    you on where to go out in a new city.
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <app-contact></app-contact>
-    </div>
-    <div class="row">
-        <h3>Built With:</h3>
-        <img class="google-api-image" [src]="googleApiImage" alt="google api image">
+        <div class="built-with-container">
+            <h3>For those that are intrersted...</h3>
+            <p>This site is built in the MEAN stack with Angular.</p>
+            <p>You can see the code
+                <span (click)="goToGithub()" class="external-link">here</span> on Github.</p>
+            <p>I used the Google Places API for the locations, and weather underground for the weather.</p>
+            <p class="privacy-link" (click)="goToPrivacyPolicy()"> Read our privicy policy here.</p>
+        </div>
+        <div class="contact-form-container">
+            <p>You can contact me here with suggestions or feedback. I'd love to hear from you.</p>
+            <app-contact></app-contact>
+            <p>Made with
+                <3 in Tel Aviv, Israel.</p>
+        </div>
     </div>
 </div>

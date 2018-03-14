@@ -3,3 +3,26 @@
   height: 50px;
 }
 
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 5px;
+}
+
+.about-container {
+  align-self: center;
+}
+
+.external-link:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.contact-form-container {
+  align-self: center;
+}
+
+.built-with-container {
+  align-self: center;
+}

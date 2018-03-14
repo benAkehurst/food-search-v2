@@ -14,12 +14,21 @@ import { DatePipe } from '@angular/common';
 })
 export class AboutComponent implements OnInit {
 
-    constructor(private dataService: DataService, private router: Router) {
-        this.googleApiImage = '/assets/images/google-api.png';
-    }
-    googleApiImage: String;
+    constructor(private dataService: DataService, private router: Router) { }
+
+    googleApiImage = '/assets/images/google-api.png';
+    githubUrl = 'https://github.com/benAkehurst/food-search-v2';
+
     ngOnInit() {
 
+    }
+
+    public goToPrivacyPolicy() {
+        this.router.navigate(['/privacy']);
+    }
+
+    public goToGithub() {
+        window.open(this.githubUrl);
     }
 
 }

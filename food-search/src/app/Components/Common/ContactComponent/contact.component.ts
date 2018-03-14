@@ -46,10 +46,6 @@ export class ContactComponent implements OnInit {
             });
     }
 
-    public goToPrivacyPolicy() {
-        this.router.navigate(['/privacy']);
-    }
-
     public openSwal(Title, text) {
         swal({
             title: Title,

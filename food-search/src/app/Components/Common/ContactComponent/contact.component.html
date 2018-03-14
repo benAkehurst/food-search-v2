@@ -7,7 +7,5 @@
     <div class="flex">
         <textarea placeholder="Message" rows="1" required [(ngModel)]="this.messageMessage" [ngModelOptions]="{standalone: true}"></textarea>
     </div>
-    <button (click)="sendMessage()">Send</button>
+    <button (click)="sendMessage()" [attr.disabled]="!this.messageMessage ? true : null">Send</button>
 </form>
-
-<h3 class="privacy-link" (click)="goToPrivacyPolicy()">Link to Privacy Policy</h3>

@@ -27,7 +27,7 @@
 /* The triangle form is achieved by a CSS hack */
 
 .login-header {
-  background:#7b20a2;
+  background:#03A9F4;
   padding: 20px;
   font-size: 1.4em;
   font-weight: normal;
@@ -76,7 +76,7 @@
 }
 
 .login input[type="submit"] {
-  background: #7b20a2;
+  background: #03A9F4;
   border-color: transparent;
   color: #fff;
   cursor: pointer;
@@ -89,7 +89,7 @@
 /* Buttons' focus effect */
 
 .login input[type="submit"]:focus {
-  border-color: #7b20a2;
+  border-color: #03A9F4;
 }
 
 .privacy-container {

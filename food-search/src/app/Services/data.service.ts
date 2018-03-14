@@ -103,10 +103,23 @@ export class DataService {
   //
   // ─── MAP REQUESTS ───────────────────────────────────────────────────────────────
   //
-
+  saveRoute() {
+    const userId = this.getUserId();
+    const dataObj = {
+      user: userId,
+      route: this.Route
+    };
+    return this.http
+      .post(this.localUrl + 'saveRoute', { data: dataObj }, { headers: this.headers })
+      .map(res => res.json());
+  }
 
   //
   // ───────────────────────────────────────────────────────────── MAP REQUESTS ─────
   //
 
+  public getUserId() {
+    const userId = localStorage.getItem('id');
+    return userId;
+  }
 }

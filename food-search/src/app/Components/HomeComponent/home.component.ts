@@ -162,6 +162,8 @@ public sortThreeOptions() {
   console.log(routeOption);
   this.routeOption = routeOption;
   this.randomRouteOption = routeOption;
+  this.dataService.Route = routeOption;
+  console.log(this.dataService.Route);
   // this.getAllPlaces();
   // this.isDataLoaded = true;
   this.changeDetectorRef.detectChanges();
@@ -169,6 +171,13 @@ public sortThreeOptions() {
 
 public saveRoute() {
   console.log('route saved');
+  this.dataService.saveRoute().subscribe(response => {
+    console.log(response);
+  },
+    error => {
+      this.errors = error;
+      this.openSwal('Error', 'Sorry, we couldn\'t get any reccomendations right now');
+    });
 }
 
 public viewPlace(location) {

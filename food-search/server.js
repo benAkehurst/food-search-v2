@@ -22,9 +22,6 @@ const mongooseUniqueValidator = require('mongoose-unique-validator');
 const app = express();
 // Get our API routes
 const api = require('./server/serverRoutes/api');
-// Schemas
-const User = require('./server/serverModels/userModel');
-const Route = require('./server/serverModels/routeModel');
 // Requirements
 require('dotenv').config()
 // Setting default server settings
@@ -58,6 +55,13 @@ app.get('*', (req, res) => {
 // ────────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────
 //   :::::: S E R V E R   R O U T E S : :  :   :    :     :        :          :
 // ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+//
+// ─── MODELS ─────────────────────────────────────────────────────────────────────
+//
+const User = require('./server/serverModels/userModel');
+const Route = require('./server/serverModels/routeModel');
+//
+// ─────────────────────────────────────────────────────────────────── MODELS ─────
 //
 //
 // ─── LOGIN AND REGISTER ─────────────────────────────────────────────────────────
@@ -268,20 +272,43 @@ app.get("/:userId/userInfo", function (req, res) {
  * Saves a new route to the user model in the database
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-app.post("/:userId/saveRoute", function (req, res) {
-    var data = req.body.routes;
-    var newRoute = {
-        locationOne: data.loc1,
-        locationTwo: data.loc2,
-        locationThree: data.loc3
-    }
-    User.findByIdAndUpdate(req.body.uid, { "$push": { "savedRoutes": newRoute } }).exec(function (err, user) {
+app.post("/saveRoute", function (req, res, next) {
+    const data = req.body.data;
+    const userId = req.body.data.user;
+    const objectId = mongoose.Types.ObjectId(userId);
+    console.log(data);
+    console.log(data.route);
+    console.log(userId);
+
+    const newRoute = new Route({
+        locationOne: data.route.locationOne,
+        locationTwo: data.route.locationTwo,
+        locationThree: data.route.locationThree,
+        user: objectId
+    });
+    console.log(newRoute);
+
+    newRoute.save(function (err, route) {
         if (err) {
-            console.log("Error: " + err)
+            return next(err);
         }
-        res.send({ success: true });
-    })
+        User.findByIdAndUpdate(
+            userId,
+            { $push: { savedRoutes: route._id } },
+            function (err, user) {
+                if (err) {
+                    return next(err);
+                }
+                res.send({
+                    success: true,
+                    message: 'route saved',
+                    data: user
+                });
+            }
+        );
+    });
 });
 
 /**

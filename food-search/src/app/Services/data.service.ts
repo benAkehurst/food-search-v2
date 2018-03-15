@@ -55,6 +55,13 @@ export class DataService {
       .post(this.localUrl + 'sendContactUsMessage', { data: messageObj}, {headers: this.headers})
       .map(res => res.json());
     }
+
+    getUserProfile() {
+      const userId = this.getUserId();
+      return this.http
+        .get(this.localUrl + 'userInfo/' + userId, { headers: this.headers })
+        .map(res => res.json());
+    }
   //
   // ──────────────────────────────────────────────────────────── USER REQUESTS ─────
   //

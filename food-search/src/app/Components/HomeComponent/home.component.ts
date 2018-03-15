@@ -163,16 +163,17 @@ public sortThreeOptions() {
   this.routeOption = routeOption;
   this.randomRouteOption = routeOption;
   this.dataService.Route = routeOption;
-  console.log(this.dataService.Route);
+  // console.log(this.dataService.Route);
   // this.getAllPlaces();
   // this.isDataLoaded = true;
   this.changeDetectorRef.detectChanges();
 }
 
 public saveRoute() {
-  console.log('route saved');
+  // console.log('route saved');
   this.dataService.saveRoute().subscribe(response => {
-    console.log(response);
+    // console.log(response);
+    this.openSwal('Success', 'Your route was saved!');
   },
     error => {
       this.errors = error;

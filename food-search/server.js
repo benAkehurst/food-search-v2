@@ -256,16 +256,23 @@ app.post('/currentWeather', function (req, res) {
  * @param {*} req
  * @param {*} res
  */
-app.get("/:userId/userInfo", function (req, res) {
-    User.findById({ _id: req.params.userId }).exec(function (err, user) {
-        if (err) {
-            console.log("Error: " + " " + err);
-        } else {
-            // console.log(user);
-            res.send(user);
-            console.log("Returned user to login");
-        }
-    })
+app.get("/userInfo/:_id", function (req, res) {
+    console.log(req.body);
+    console.log(req.params._id);
+    // User.findById()
+    //     // .populate({
+    //     //     path: 'savedRoutes',
+    //     //     model: 'Route'
+    //     // })
+    //     .exec(function (err, userData) {
+    //         if (err) {
+    //             console.log("Error: " + " " + err);
+    //             res.send({success: false, message: err});
+    //         } else {
+    //             console.log(userData);
+    //             res.send({success: true, user: userData})
+    //         }
+    //     })
 });
 
 /**
@@ -278,9 +285,6 @@ app.post("/saveRoute", function (req, res, next) {
     const data = req.body.data;
     const userId = req.body.data.user;
     const objectId = mongoose.Types.ObjectId(userId);
-    console.log(data);
-    console.log(data.route);
-    console.log(userId);
 
     const newRoute = new Route({
         locationOne: data.route.locationOne,
@@ -288,8 +292,6 @@ app.post("/saveRoute", function (req, res, next) {
         locationThree: data.route.locationThree,
         user: objectId
     });
-    console.log(newRoute);
-
     newRoute.save(function (err, route) {
         if (err) {
             return next(err);
@@ -303,8 +305,7 @@ app.post("/saveRoute", function (req, res, next) {
                 }
                 res.send({
                     success: true,
-                    message: 'route saved',
-                    data: user
+                    message: 'route saved'
                 });
             }
         );

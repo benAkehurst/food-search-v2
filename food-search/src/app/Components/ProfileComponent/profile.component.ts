@@ -16,11 +16,29 @@ export class ProfileComponent implements OnInit {
 
     constructor(private dataService: DataService, private router: Router) { }
 
+    errors: any;
+    data: any;
 
     ngOnInit() {
-
-
+        this.getUserData();
     }
 
+    public getUserData() {
+        this.dataService.getUserProfile().subscribe(response => {
+            console.log(response);
+        },
+        error => {
+            this.errors = error;
+            console.log(this.errors);
+            // this.openSwal('Error', 'Sorry, we couldn\'t get your profile data right now');
+        });
+    }
+
+    public openSwal(Title, text) {
+        swal({
+            title: Title,
+            text: text,
+        });
+    }
 
 }

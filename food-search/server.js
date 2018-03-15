@@ -220,7 +220,7 @@ app.post('/getPlaceImage', function (req, res) {
     // console.log(photoUrl);
     res.send( { 'status': true, 'data': photoUrl} );
     console.log("Photo Url sent to FE");
-}); 
+});
 
 /**
  * Gets the current weather
@@ -256,23 +256,25 @@ app.post('/currentWeather', function (req, res) {
  * @param {*} req
  * @param {*} res
  */
-app.get("/userInfo/:_id", function (req, res) {
-    console.log(req.body);
-    console.log(req.params._id);
-    // User.findById()
-    //     // .populate({
-    //     //     path: 'savedRoutes',
-    //     //     model: 'Route'
-    //     // })
-    //     .exec(function (err, userData) {
-    //         if (err) {
-    //             console.log("Error: " + " " + err);
-    //             res.send({success: false, message: err});
-    //         } else {
-    //             console.log(userData);
-    //             res.send({success: true, user: userData})
-    //         }
-    //     })
+app.post("/getProfile", function (req, res) {
+    const data = req.body.data;
+    const userId = req.body.data.user;
+    console.log(data);
+    console.log(userId);
+    User.findById({_id: userId})
+        .populate({
+            path: 'savedRoutes',
+            model: 'Route'
+        })
+        .exec(function (err, userData) {
+            if (err) {
+                console.log("Error: " + " " + err);
+                res.send({success: false, message: err});
+            } else {
+                console.log(userData);
+                res.send({success: true, user: userData})
+            }
+        })
 });
 
 /**

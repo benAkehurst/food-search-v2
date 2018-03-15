@@ -58,8 +58,11 @@ export class DataService {
 
     getUserProfile() {
       const userId = this.getUserId();
+      const dataObj = {
+        user: userId
+      };
       return this.http
-        .get(this.localUrl + 'userInfo/' + userId, { headers: this.headers })
+        .post(this.localUrl + 'getProfile', {data: dataObj}, { headers: this.headers })
         .map(res => res.json());
     }
   //

@@ -18,6 +18,8 @@ export class ProfileComponent implements OnInit {
 
     errors: any;
     data: any;
+    profile: Object;
+    routes: any[] = [];
 
     ngOnInit() {
         this.getUserData();
@@ -26,6 +28,10 @@ export class ProfileComponent implements OnInit {
     public getUserData() {
         this.dataService.getUserProfile().subscribe(response => {
             console.log(response);
+            this.profile = response.user;
+            this.routes = response.user.savedRoutes;
+            console.log(this.profile);
+            console.log(this.routes);
         },
         error => {
             this.errors = error;

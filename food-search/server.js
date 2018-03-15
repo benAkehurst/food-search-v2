@@ -271,7 +271,7 @@ app.post("/getProfile", function (req, res) {
                 console.log("Error: " + " " + err);
                 res.send({success: false, message: err});
             } else {
-                console.log(userData);
+                // console.log(userData);
                 res.send({success: true, user: userData})
             }
         })

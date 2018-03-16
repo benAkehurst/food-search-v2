@@ -13,6 +13,7 @@ const rp = require('request-promise');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const mongooseUniqueValidator = require('mongoose-unique-validator');
+const async = require("async");
 //
 // ──────────────────────────────────────────────────────────────────────────────────────────────────────────── I ──────────
 //   :::::: S E R V E R   C O N F I G U R A T I O N : :  :   :    :     :        :          :
@@ -315,6 +316,73 @@ app.post("/saveRoute", function (req, res, next) {
 });
 
 /**
+ * Removes a route from the user model in the database
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+app.post("/deleteRoute", function (req, res, next) {
+    var routeId = req.body.data.routeId;
+    var userId = req.body.data.userId;
+    async.parallel(
+        {
+            updateRoute: function (callback) {
+                Route.findByIdAndRemove(routeId).exec(function (err, updatedRoute) {
+                    callback(err, updatedRoute);
+                });
+            },
+            updatedUser: function (callback) {
+                User.findByIdAndUpdate(
+                    userId,
+                    { $pull: { savedRoutes: routeId } },
+                    { new: true }
+                ).exec(function (err, updatedUser) {
+                    callback(err, updatedUser);
+                });
+            }
+        },
+        function (err, results) {
+            if (err) {
+                next(err);
+                return;
+            }
+            res.send({ success: true, user: results.updatedUser });
+        }
+    );
+});
+
+
+function deleteQuestion(req, res, next) {
+    var questionId = req.params.questionId;
+    var userId = req.body.userId;
+    async.parallel(
+        {
+            updateQuestion: function (callback) {
+                QuestionModel.findByIdAndRemove(questionId).exec(function (err, updatedQuestion) {
+                    callback(err, updatedQuestion);
+                });
+            },
+            updatedUser: function (callback) {
+                UserModel.findByIdAndUpdate(
+                    userId,
+                    { $pull: { askedQuestions: questionId } },
+                    { new: true }
+                ).exec(function (err, updatedUser) {
+                    callback(err, updatedUser);
+                });
+            }
+        },
+        function (err, results) {
+            if (err) {
+                next(err);
+                return;
+            }
+            res.send({ success: true, user: results.updatedUser });
+        }
+    );
+}
+
+/**
  * Saves a new place to the user model in the database
  * @param {*} req
  * @param {*} res
@@ -332,32 +400,6 @@ app.post("/:userId/savePlace", function (req, res) {
         }
         res.send({ success: true });
     })
-});
-
-/**
- * Removes a route from the user model in the database
- * @param {*} req
- * @param {*} res
- */
-app.delete("/:userId/deleteRoute", function (req, res) {
-    // console.log("ID" + request.params.id);
-    User.findOne({ id: req.body.id })
-        .exec(function (err, user) {
-            if (err) {
-                console.log("Error" + " " + err)
-            } else {
-                if (user) {
-                    console.log("User " + user);
-                    for (var i = 0; i < user.routes.length; i++) {
-                        if (user.routes[i]._id == request.params._id) {
-                            user.routes.splice(i, 1)
-                            user.save();
-                        }
-                    }
-                    res.send(user);
-                }
-            }
-        })
 });
 
 /**

@@ -35,9 +35,18 @@ export class ProfileComponent implements OnInit {
         },
         error => {
             this.errors = error;
-            console.log(this.errors);
-            // this.openSwal('Error', 'Sorry, we couldn\'t get your profile data right now');
+            this.openSwal('Error', 'Sorry, we couldn\'t get your profile data right now');
         });
+    }
+
+    public deleteSelectedRoute(routeId) {
+        this.dataService.deleteRoute(routeId).subscribe(response => {
+            console.log(response);
+        },
+            error => {
+                this.errors = error;
+                this.openSwal('Error', 'Sorry, there was an error deleting the route');
+            });
     }
 
     public openSwal(Title, text) {

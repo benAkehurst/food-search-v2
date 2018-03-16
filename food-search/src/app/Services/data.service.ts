@@ -65,6 +65,17 @@ export class DataService {
         .post(this.localUrl + 'getProfile', {data: dataObj}, { headers: this.headers })
         .map(res => res.json());
     }
+
+    deleteRoute(routeId) {
+      const userId = this.getUserId();
+      const dataObj = {
+        user: userId,
+        route: routeId
+      };
+      return this.http
+        .post(this.localUrl + 'deleteRoute', { data: dataObj }, { headers: this.headers })
+        .map(res => res.json());
+    }
   //
   // ──────────────────────────────────────────────────────────── USER REQUESTS ─────
   //
@@ -123,7 +134,6 @@ export class DataService {
       .post(this.localUrl + 'saveRoute', { data: dataObj }, { headers: this.headers })
       .map(res => res.json());
   }
-
   //
   // ───────────────────────────────────────────────────────────── MAP REQUESTS ─────
   //

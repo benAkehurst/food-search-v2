@@ -1,6 +1,19 @@
 <app-header></app-header>
-<h1>Profile Page</h1>
-<p>Upload an image to firebase?</p>
-<p>On enter - geet user data from server</p>
-<p>Ng repeat cards with places & routes</p>
-<p>Have a map?</p>
+<div class="saved-routes-container">
+    <h1>Profile</h1>
+    <hr>
+    <h2>Saved Routes</h2>
+    <div class="route" *ngFor="let route of this.routes">
+        <mat-card class="route-card">
+            <div class="route-places">
+                <mat-card class="route-location-name">{{route.locationOne.name}}</mat-card>
+                <mat-card class="route-location-name">{{route.locationTwo.name}}</mat-card>
+                <mat-card class="route-location-name">{{route.locationThree.name}}</mat-card>
+            </div>
+            <div class="delete-route" (click)="deleteSelectedRoute(route._id)">
+                <i class="fa fa-trash-alt"></i>
+                <mat-icon>delete</mat-icon>
+            </div>
+        </mat-card>
+    </div>
+</div>

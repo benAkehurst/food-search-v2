@@ -1,0 +1,42 @@
+.saved-routes-container {
+  padding: 10px;
+}
+
+.route {
+  margin-bottom: 25px;
+}
+
+.route-card {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  align-items: center;
+  width: 60%;
+}
+
+.route-places {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+.route-loaction-name {
+  width: 30%;
+  margin: 0 20px 0 20px;
+}
+
+.delete-route{
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.delete-route:hover {
+  color: red;
+}
+

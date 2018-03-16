@@ -68,10 +68,12 @@ export class DataService {
 
     deleteRoute(routeId) {
       const userId = this.getUserId();
+      // console.log(routeId);
       const dataObj = {
         user: userId,
         route: routeId
       };
+      // console.log(dataObj);
       return this.http
         .post(this.localUrl + 'deleteRoute', { data: dataObj }, { headers: this.headers })
         .map(res => res.json());

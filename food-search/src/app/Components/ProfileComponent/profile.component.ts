@@ -27,11 +27,11 @@ export class ProfileComponent implements OnInit {
 
     public getUserData() {
         this.dataService.getUserProfile().subscribe(response => {
-            console.log(response);
+            // console.log(response);
             this.profile = response.user;
             this.routes = response.user.savedRoutes;
-            console.log(this.profile);
-            console.log(this.routes);
+            // console.log(this.profile);
+            // console.log(this.routes);
         },
         error => {
             this.errors = error;
@@ -41,7 +41,8 @@ export class ProfileComponent implements OnInit {
 
     public deleteSelectedRoute(routeId) {
         this.dataService.deleteRoute(routeId).subscribe(response => {
-            console.log(response);
+            // console.log(response);
+            this.getUserData();
         },
             error => {
                 this.errors = error;

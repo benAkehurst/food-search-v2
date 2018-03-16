@@ -162,7 +162,7 @@ app.post("/sendContactUsMessage", function (req, res) {
         subject: 'Message From Munch User' + ' ' + data.name,
         text: data.message
     };
-    console.log(messageDetails);
+    // console.log(messageDetails);
     mailgun.messages().send(messageDetails, function (error, body) {
         res.send({ 'status': true, 'data': body } )
     });
@@ -193,7 +193,7 @@ rp(options)
  */
 app.post('/routeOptions', function (req, res) {
     var data = req.body.data;
-    console.log(data);
+    // console.log(data);
     console.log('Requesting Places from Goolge API');
     var base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
     var lat = data.lat;
@@ -204,7 +204,7 @@ app.post('/routeOptions', function (req, res) {
     var key = "&key=" + process.env.GOOGLE_PLACES_API_KEY;
     var searchTerm = base + lat + ',' + lng + radius + type + key;
     // var searchTerm = base + longLat + radius + type + key;
-    console.log(searchTerm);
+    // console.log(searchTerm);
     request(searchTerm, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var options = JSON.parse(body)
@@ -245,7 +245,7 @@ app.post('/currentWeather', function (req, res) {
     var mode = "&mode=json";
     var key = "&APPID=" + process.env.OPEN_WEATHER_MAP_API_KEY;
     var searchUrl = baseUrl + city + comma + country + mode + key;
-    console.log(searchUrl);
+    // console.log(searchUrl);
     request(searchUrl, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var weather = JSON.parse(body)
@@ -269,20 +269,18 @@ app.post('/currentWeather', function (req, res) {
 app.post("/getProfile", function (req, res) {
     const data = req.body.data;
     const userId = req.body.data.user;
-    console.log(data);
-    console.log(userId);
     User.findById({_id: userId})
         .populate({
             path: 'savedRoutes',
             model: 'Route'
         })
-        .exec(function (err, userData) {
+        .exec(function (err, user) {
             if (err) {
                 console.log("Error: " + " " + err);
                 res.send({success: false, message: err});
             } else {
-                // console.log(userData);
-                res.send({success: true, user: userData})
+                console.log(user);
+                res.send({ success: true, user: user})
             }
         })
 });
@@ -331,8 +329,8 @@ app.post("/saveRoute", function (req, res, next) {
  * @param {*} next
  */
 app.post("/deleteRoute", function (req, res, next) {
-    var routeId = req.body.data.routeId;
-    var userId = req.body.data.userId;
+    var routeId = req.body.data.route;
+    var userId = req.body.data.user;
     async.parallel(
         {
             updateRoute: function (callback) {
@@ -360,37 +358,6 @@ app.post("/deleteRoute", function (req, res, next) {
     );
 });
 
-
-function deleteQuestion(req, res, next) {
-    var questionId = req.params.questionId;
-    var userId = req.body.userId;
-    async.parallel(
-        {
-            updateQuestion: function (callback) {
-                QuestionModel.findByIdAndRemove(questionId).exec(function (err, updatedQuestion) {
-                    callback(err, updatedQuestion);
-                });
-            },
-            updatedUser: function (callback) {
-                UserModel.findByIdAndUpdate(
-                    userId,
-                    { $pull: { askedQuestions: questionId } },
-                    { new: true }
-                ).exec(function (err, updatedUser) {
-                    callback(err, updatedUser);
-                });
-            }
-        },
-        function (err, results) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.send({ success: true, user: results.updatedUser });
-        }
-    );
-}
-
 /**
  * Saves a new place to the user model in the database
  * @param {*} req
@@ -410,35 +377,6 @@ app.post("/:userId/savePlace", function (req, res) {
         res.send({ success: true });
     })
 });
-
-/**
- * Removes a route from the user model in the database
- * @param {*} req
- * @param {*} res
- */
-app.delete("/:userId/deletePlace", function (req, res) {
-    // console.log("ID" + request.params.id);
-    User.findOne({ id: req.body.id })
-        .exec(function (err, user) {
-            if (err) {
-                console.log("Error" + " " + err)
-            } else {
-                if (user) {
-                    console.log("User " + user);
-                    for (var i = 0; i < user.routes.length; i++) {
-                        if (user.routes[i]._id == request.params._id) {
-                            user.routes.splice(i, 1)
-                            user.save();
-                        }
-                    }
-                    res.send(user);
-                }
-            }
-        })
-});
-
-
-
 //
 // ───────────────────────────────────────────────────── USER SPECIFIC ROUTES ─────
 //

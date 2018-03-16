@@ -24,6 +24,7 @@
   justify-content: space-around;
   align-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .route-loaction-name {

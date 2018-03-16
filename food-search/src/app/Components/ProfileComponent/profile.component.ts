@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 import { Http } from '@angular/http/src/http';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+
+import { MapComponent } from '../HomeComponent/MapComponent/map.component';
 
 
 @Component({
@@ -15,6 +17,7 @@ import { NgModel } from '@angular/forms';
 export class ProfileComponent implements OnInit {
 
     constructor(private dataService: DataService, private router: Router) { }
+    @ViewChild(MapComponent) mapComponent: MapComponent;
 
     errors: any;
     data: any;
@@ -48,6 +51,10 @@ export class ProfileComponent implements OnInit {
                 this.errors = error;
                 this.openSwal('Error', 'Sorry, there was an error deleting the route');
             });
+    }
+
+    public showRouteOnMap(route) {
+        this.mapComponent.showRouteOnMapFromProfileComponent(route);
     }
 
     public openSwal(Title, text) {

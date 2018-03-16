@@ -4,11 +4,11 @@
     <hr>
     <h2>Saved Routes</h2>
     <div class="route" *ngFor="let route of this.routes">
-        <mat-card class="route-card">
+        <mat-card class="route-card" (click)="showRouteOnMap(route)">
             <div class="route-places">
-                <mat-card class="route-location-name">{{route.locationOne.name}}</mat-card>
-                <mat-card class="route-location-name">{{route.locationTwo.name}}</mat-card>
-                <mat-card class="route-location-name">{{route.locationThree.name}}</mat-card>
+                <mat-card class="route-location-name">{{route.locationOne?.name}}</mat-card>
+                <mat-card class="route-location-name">{{route.locationTwo?.name}}</mat-card>
+                <mat-card class="route-location-name">{{route.locationThree?.name}}</mat-card>
             </div>
             <div class="delete-route" (click)="deleteSelectedRoute(route._id)">
                 <i class="fa fa-trash-alt"></i>
@@ -16,4 +16,5 @@
             </div>
         </mat-card>
     </div>
+    <app-map></app-map>
 </div>

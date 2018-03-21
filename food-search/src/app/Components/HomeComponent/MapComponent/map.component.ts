@@ -23,7 +23,7 @@ chosenRouteFromHomeComponent: any;
 ngOnInit() {
   setTimeout(() => {
     this.initGoogleMaps();
-  }, 2000);
+  }, 4000);
 }
 
 public initGoogleMaps() {

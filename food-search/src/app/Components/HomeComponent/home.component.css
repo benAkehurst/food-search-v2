@@ -50,11 +50,13 @@ mat-toolbar-row {
 }
 
 .route-button {
+  margin: 0px 10px 0 10px;
   order: 0;
   flex: 0 1 auto;
   align-self: auto;
-  background-color: #27ae60;
-  color: oldlace;
+  background-color: #03A9F4;
+
+  color: white;
 }
 
 .selected-place-image{

@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import keys from '../../DataModels/FrontEndKeys';
+// import keys from '../../DataModels/FrontEndKeys';
 
 // Components
 import { AppComponent } from './app.component';

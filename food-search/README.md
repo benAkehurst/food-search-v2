@@ -4,6 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 The base version of the app was built with the tutorial from (https://scotch.io/tutorials/mean-app-with-angular-2-and-the-angular-cli)
 
+The idea is that you will be able to get a recommendation of where to go out in a new city.
+
 ## Development server
 
 Run `npm run build` for a dev server. Navigate to `http://localhost:3000/`.

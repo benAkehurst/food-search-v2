@@ -251,12 +251,6 @@ public getStorageItems() {
   }
 }
 
-public letLoginHappen() {
-  if (this.loggedIn === true) {
-    console.log('logged in');
-  }
-}
-
 public openSwal(Title, text) {
   swal({
     title: Title,
